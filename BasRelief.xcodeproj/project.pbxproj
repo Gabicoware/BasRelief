@@ -1,0 +1,416 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* BasReliefAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* BasReliefAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D7ACF80DDB3853001CB0EB /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* MainMenuController.m */; };
+		770921510FF668AD001E8115 /* BasReliefRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = 770921500FF668AD001E8115 /* BasReliefRendering.m */; };
+		771AA96C0F34BE2500E5055D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 771AA96B0F34BE2500E5055D /* Icon.png */; };
+		771AA9720F34C09400E5055D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 771AA9710F34C09400E5055D /* Default.png */; };
+		771B37BE0FE379B600D9013D /* BitmapRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771B37BD0FE379B600D9013D /* BitmapRenderViewController.m */; };
+		774C49F10FE73F06009821E2 /* RenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 774C49F00FE73F06009821E2 /* RenderViewController.m */; };
+		775120FA0F296A3F00A0BD61 /* OpenGLRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775120F90F296A3F00A0BD61 /* OpenGLRenderViewController.m */; };
+		775A630A0F51120F00E4BF1D /* sandstone.png in Resources */ = {isa = PBXBuildFile; fileRef = 775A63090F51120F00E4BF1D /* sandstone.png */; };
+		777855A71041A24700CDFB22 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777855A61041A24700CDFB22 /* RenderView.m */; };
+		777856AA1041C1C500CDFB22 /* BitmapRenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777856A91041C1C500CDFB22 /* BitmapRenderViewController.xib */; };
+		778026460FE464A900388B98 /* BitmapRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 778026450FE464A900388B98 /* BitmapRenderView.m */; };
+		77917B0C103862A500B29143 /* TextureRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77917B09103862A500B29143 /* TextureRenderView.m */; };
+		77917B0D103862A500B29143 /* TextureRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77917B0B103862A500B29143 /* TextureRenderViewController.m */; };
+		7795D845102B007400B4CB1C /* LightSource.c in Sources */ = {isa = PBXBuildFile; fileRef = 7795D844102B007400B4CB1C /* LightSource.c */; };
+		77A31C7410394B54004890C4 /* TextureRenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77A31C7310394B54004890C4 /* TextureRenderViewController.xib */; };
+		77B0FAA3107A7CA900C6C9CB /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MainMenuViewController.xib */; };
+		77D4D6C910310D6F0049D8CC /* BasReliefMaterial.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D4D6C810310D6F0049D8CC /* BasReliefMaterial.m */; };
+		77D807C90F2AB7C700ACFE7E /* OpenGLRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D807C80F2AB7C700ACFE7E /* OpenGLRenderView.m */; };
+		77D808060F2ABA0700ACFE7E /* OpenGLRenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D808050F2ABA0700ACFE7E /* OpenGLRenderViewController.xib */; };
+		77D808950F2ABEB000ACFE7E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D808940F2ABEB000ACFE7E /* OpenGLES.framework */; };
+		77D8089F0F2ABF4700ACFE7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D8089E0F2ABF4700ACFE7E /* QuartzCore.framework */; };
+		77DE97C110246059000153F3 /* BitmapAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DE97BE10246059000153F3 /* BitmapAccessor.m */; };
+		77DE97C210246059000153F3 /* brgreom.c in Sources */ = {isa = PBXBuildFile; fileRef = 77DE97C010246059000153F3 /* brgreom.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* BasReliefAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasReliefAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* BasReliefAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasReliefAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* BasRelief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasRelief.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2899E5210DE3E06400AC0155 /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28D7ACF60DDB3853001CB0EB /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
+		28D7ACF70DDB3853001CB0EB /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* BasRelief_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasRelief_Prefix.pch; sourceTree = "<group>"; };
+		7709214F0FF668AD001E8115 /* BasReliefRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasReliefRendering.h; sourceTree = "<group>"; };
+		770921500FF668AD001E8115 /* BasReliefRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasReliefRendering.m; sourceTree = "<group>"; };
+		771AA96B0F34BE2500E5055D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		771AA9710F34C09400E5055D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		771B37BC0FE379B600D9013D /* BitmapRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapRenderViewController.h; sourceTree = "<group>"; };
+		771B37BD0FE379B600D9013D /* BitmapRenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapRenderViewController.m; sourceTree = "<group>"; };
+		774C49EF0FE73F06009821E2 /* RenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewController.h; sourceTree = "<group>"; };
+		774C49F00FE73F06009821E2 /* RenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewController.m; sourceTree = "<group>"; };
+		775120F90F296A3F00A0BD61 /* OpenGLRenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLRenderViewController.m; sourceTree = "<group>"; };
+		775A63090F51120F00E4BF1D /* sandstone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sandstone.png; sourceTree = "<group>"; };
+		776B1935107138C800547090 /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenuViewController.xib; path = Lite/MainMenuViewController.xib; sourceTree = "<group>"; };
+		777855A51041A24700CDFB22 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
+		777855A61041A24700CDFB22 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
+		777856A91041C1C500CDFB22 /* BitmapRenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BitmapRenderViewController.xib; sourceTree = "<group>"; };
+		778026440FE464A900388B98 /* BitmapRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapRenderView.h; sourceTree = "<group>"; };
+		778026450FE464A900388B98 /* BitmapRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapRenderView.m; sourceTree = "<group>"; };
+		778026E30FE513DA00388B98 /* RenderViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewControllerDelegate.h; sourceTree = "<group>"; };
+		77917B07103862A500B29143 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderViewController.h; sourceTree = "<group>"; };
+		77917B08103862A500B29143 /* TextureRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureRenderView.h; sourceTree = "<group>"; };
+		77917B09103862A500B29143 /* TextureRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureRenderView.m; sourceTree = "<group>"; };
+		77917B0A103862A500B29143 /* TextureRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureRenderViewController.h; sourceTree = "<group>"; };
+		77917B0B103862A500B29143 /* TextureRenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureRenderViewController.m; sourceTree = "<group>"; };
+		7795D843102B007400B4CB1C /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
+		7795D844102B007400B4CB1C /* LightSource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LightSource.c; sourceTree = "<group>"; };
+		7797FAA0105EC859006FF952 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		77A31C7310394B54004890C4 /* TextureRenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextureRenderViewController.xib; sourceTree = "<group>"; };
+		77D4D6C710310D6F0049D8CC /* BasReliefMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasReliefMaterial.h; sourceTree = "<group>"; };
+		77D4D6C810310D6F0049D8CC /* BasReliefMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasReliefMaterial.m; sourceTree = "<group>"; };
+		77D807C70F2AB7C700ACFE7E /* OpenGLRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderView.h; sourceTree = "<group>"; };
+		77D807C80F2AB7C700ACFE7E /* OpenGLRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLRenderView.m; sourceTree = "<group>"; };
+		77D808050F2ABA0700ACFE7E /* OpenGLRenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OpenGLRenderViewController.xib; sourceTree = "<group>"; };
+		77D808940F2ABEB000ACFE7E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		77D8089E0F2ABF4700ACFE7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		77DE97BD10246059000153F3 /* BitmapAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapAccessor.h; sourceTree = "<group>"; };
+		77DE97BE10246059000153F3 /* BitmapAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapAccessor.m; sourceTree = "<group>"; };
+		77DE97BF10246059000153F3 /* brgeom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brgeom.h; sourceTree = "<group>"; };
+		77DE97C010246059000153F3 /* brgreom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = brgreom.c; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				77D808950F2ABEB000ACFE7E /* OpenGLES.framework in Frameworks */,
+				77D8089F0F2ABF4700ACFE7E /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				77942552102FA37F00EE9063 /* Controller */,
+				77942551102FA34F00EE9063 /* View */,
+				77942550102FA33A00EE9063 /* Model */,
+				1D3623240D0F684500981E51 /* BasReliefAppDelegate.h */,
+				1D3623250D0F684500981E51 /* BasReliefAppDelegate.m */,
+				778026E30FE513DA00388B98 /* RenderViewControllerDelegate.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* BasRelief.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				77DE97BC10246059000153F3 /* Source */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* BasRelief_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				776B19341071380D00547090 /* Lite */,
+				2899E5210DE3E06400AC0155 /* MainMenuViewController.xib */,
+				777856A91041C1C500CDFB22 /* BitmapRenderViewController.xib */,
+				77D808050F2ABA0700ACFE7E /* OpenGLRenderViewController.xib */,
+				77A31C7310394B54004890C4 /* TextureRenderViewController.xib */,
+				771AA9710F34C09400E5055D /* Default.png */,
+				771AA96B0F34BE2500E5055D /* Icon.png */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				775A63090F51120F00E4BF1D /* sandstone.png */,
+				7797FAA0105EC859006FF952 /* Info copy.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				77D8089E0F2ABF4700ACFE7E /* QuartzCore.framework */,
+				77D808940F2ABEB000ACFE7E /* OpenGLES.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		776B19341071380D00547090 /* Lite */ = {
+			isa = PBXGroup;
+			children = (
+				776B1935107138C800547090 /* MainMenuViewController.xib */,
+			);
+			name = Lite;
+			sourceTree = "<group>";
+		};
+		77942550102FA33A00EE9063 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7709214F0FF668AD001E8115 /* BasReliefRendering.h */,
+				770921500FF668AD001E8115 /* BasReliefRendering.m */,
+				77D4D6C710310D6F0049D8CC /* BasReliefMaterial.h */,
+				77D4D6C810310D6F0049D8CC /* BasReliefMaterial.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		77942551102FA34F00EE9063 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				778026440FE464A900388B98 /* BitmapRenderView.h */,
+				778026450FE464A900388B98 /* BitmapRenderView.m */,
+				77D807C70F2AB7C700ACFE7E /* OpenGLRenderView.h */,
+				77D807C80F2AB7C700ACFE7E /* OpenGLRenderView.m */,
+				77917B08103862A500B29143 /* TextureRenderView.h */,
+				77917B09103862A500B29143 /* TextureRenderView.m */,
+				777855A51041A24700CDFB22 /* RenderView.h */,
+				777855A61041A24700CDFB22 /* RenderView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		77942552102FA37F00EE9063 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				28D7ACF60DDB3853001CB0EB /* MainMenuController.h */,
+				28D7ACF70DDB3853001CB0EB /* MainMenuController.m */,
+				774C49EF0FE73F06009821E2 /* RenderViewController.h */,
+				774C49F00FE73F06009821E2 /* RenderViewController.m */,
+				771B37BC0FE379B600D9013D /* BitmapRenderViewController.h */,
+				771B37BD0FE379B600D9013D /* BitmapRenderViewController.m */,
+				77917B07103862A500B29143 /* OpenGLRenderViewController.h */,
+				775120F90F296A3F00A0BD61 /* OpenGLRenderViewController.m */,
+				77917B0A103862A500B29143 /* TextureRenderViewController.h */,
+				77917B0B103862A500B29143 /* TextureRenderViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		77DE97BC10246059000153F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				77DE97BD10246059000153F3 /* BitmapAccessor.h */,
+				77DE97BE10246059000153F3 /* BitmapAccessor.m */,
+				77DE97BF10246059000153F3 /* brgeom.h */,
+				77DE97C010246059000153F3 /* brgreom.c */,
+				7795D843102B007400B4CB1C /* LightSource.h */,
+				7795D844102B007400B4CB1C /* LightSource.c */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* BasRelief */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BasRelief" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BasRelief;
+			productName = BasRelief;
+			productReference = 1D6058910D05DD3D006BFB54 /* BasRelief.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BasRelief" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* BasRelief */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77B0FAA3107A7CA900C6C9CB /* MainMenuViewController.xib in Resources */,
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				77D808060F2ABA0700ACFE7E /* OpenGLRenderViewController.xib in Resources */,
+				771AA96C0F34BE2500E5055D /* Icon.png in Resources */,
+				771AA9720F34C09400E5055D /* Default.png in Resources */,
+				775A630A0F51120F00E4BF1D /* sandstone.png in Resources */,
+				77A31C7410394B54004890C4 /* TextureRenderViewController.xib in Resources */,
+				777856AA1041C1C500CDFB22 /* BitmapRenderViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* BasReliefAppDelegate.m in Sources */,
+				28D7ACF80DDB3853001CB0EB /* MainMenuController.m in Sources */,
+				775120FA0F296A3F00A0BD61 /* OpenGLRenderViewController.m in Sources */,
+				77D807C90F2AB7C700ACFE7E /* OpenGLRenderView.m in Sources */,
+				771B37BE0FE379B600D9013D /* BitmapRenderViewController.m in Sources */,
+				778026460FE464A900388B98 /* BitmapRenderView.m in Sources */,
+				774C49F10FE73F06009821E2 /* RenderViewController.m in Sources */,
+				770921510FF668AD001E8115 /* BasReliefRendering.m in Sources */,
+				77DE97C110246059000153F3 /* BitmapAccessor.m in Sources */,
+				77DE97C210246059000153F3 /* brgreom.c in Sources */,
+				7795D845102B007400B4CB1C /* LightSource.c in Sources */,
+				77D4D6C910310D6F0049D8CC /* BasReliefMaterial.m in Sources */,
+				77917B0C103862A500B29143 /* TextureRenderView.m in Sources */,
+				77917B0D103862A500B29143 /* TextureRenderViewController.m in Sources */,
+				777855A71041A24700CDFB22 /* RenderView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos3.1.2]" = "iPhone Developer: Daniel Mueller (W6SDP3V5AV)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BasRelief_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = BasRelief;
+				"PROVISIONING_PROFILE[sdk=iphoneos3.1.2]" = "18F39E4A-9BDF-41B2-BCF5-DB256E5899CB";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BasRelief_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = BasRelief;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BasRelief" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BasRelief" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

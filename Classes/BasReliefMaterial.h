@@ -1,0 +1,25 @@
+//
+//  BasReliefMaterial.h
+//  BasRelief
+//
+//  Created by Daniel Mueller on 8/10/09.
+//  Copyright 2013 Gabicoware LLC. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "brgeom.h"
+
+@interface BasReliefMaterial : NSObject {
+	
+	RenderingValues base;
+	
+	RenderingValues shadow;
+	
+	NSString * materialBundlePath;
+}
+
+@property RenderingValues base;
+@property RenderingValues shadow;
+@property (retain) NSString * materialBundlePath;
+
+@end
