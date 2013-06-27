@@ -13,36 +13,7 @@
 #import "BasReliefRendering.h"
 #import "RenderView.h"
 
-@interface RenderViewController : UIViewController <UIAccelerometerDelegate>{
-	id <NSObject, RenderViewControllerDelegate > delegate;
-	BasReliefMaterial *material;
-	
-	BasReliefRendering *previewRendering;
-	BasReliefRendering *fullRendering;
-	
-	//This needs to be set from a sub class
-	IBOutlet RenderView *renderView;
-	
-	BOOL isPreviewing;
-		
-	double	accel[3];
-	
-	BOOL isUsingTouch;
-	
-	NSTimeInterval touchStartTime;
-	NSTimeInterval interactionStartTime;
-	
-	
-    NSTimer *animationTimer;
-    NSTimeInterval animationInterval;
-	
-	BOOL returnToMainMenuRequested;
-	BOOL isInitial;
-	BOOL needsFullRendering;
-	
-	
-	
-}
+@interface RenderViewController : UIViewController <UIAccelerometerDelegate>
 
 @property (atomic) BOOL isUsingTouch;
 
@@ -55,18 +26,7 @@
 
 -(void)prepareRendering;
 
--(void)showRendering;
-
-//-(void)preparePreviewRendering;
-//-(void)prepareFullRendering;
-
-//-(void)showPreviewRendering;
-//-(void)showFullRendering;
-
-
 @property (retain) id <NSObject, RenderViewControllerDelegate> delegate;
 @property (retain) BasReliefMaterial * material;
-
-+(CGImageRef)imageRefFromRendering:(BasReliefRendering *)rendering;
 
 @end

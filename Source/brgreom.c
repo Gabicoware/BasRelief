@@ -13,7 +13,7 @@ typedef int Boolean;
 unsigned char *HeightMap;
 float *Normals;
 
-float LightSource[3];
+float LightVector[3];
 float HeightDifference;
 
 float MaxHeight = 40.0;
@@ -66,9 +66,9 @@ SetLightVector(float x, float y, float z){
 		
 	float length = sqrtf( x*x + y*y + z*z );
 	
-	LightSource[0] = x/length;
-	LightSource[1] = y/length;
-	LightSource[2] = z/length;
+	LightVector[0] = x/length;
+	LightVector[1] = y/length;
+	LightVector[2] = z/length;
 
 	RenderingNeedsUpdating = 1;
 
@@ -79,19 +79,7 @@ NeedsUpdate(){
 	return RenderingNeedsUpdating;
 }
 
-/*
-void
-SetRenderingValues(float shadeThreshold, float shadeAlpha, float specularThreshold, float specularAlpha){
-	
-	RenderingNeedsUpdating = 1;
 
-	ShadeThreshold = shadeThreshold;
-	ShadeAlpha = shadeAlpha;
-	SpecularThreshold = specularThreshold;
-	SpecularAlpha = specularAlpha;
-	
-}
-*/
 void
 SetRenderingValues(RenderingValues values){
 	
@@ -300,20 +288,20 @@ void RenderDeterminate( const int width, const int height, const unsigned char s
 		
 		RenderingNeedsUpdating = 0;
 		
-		if(LightSource[0] == 0 && LightSource[1] == 0){
+		if(LightVector[0] == 0 && LightVector[1] == 0){
 			RenderIndeterminate( width ,  height ,  sourceColors ,  targetColors );
 		}else{
 		
 			
 			
-			//float angle = fabs(180.0*atan2f(LightSource[1], LightSource[0])/M_PI);
+			//float angle = fabs(180.0*atan2f(LightVector[1], LightVector[0])/M_PI);
 		
 			//float l1, l0;
 			
-			//l1 = LightSource[1];
-			//l0 = LightSource[0];
+			//l1 = LightVector[1];
+			//l0 = LightVector[0];
 			
-			float ratio = fabs(LightSource[0]/LightSource[1]);
+			float ratio = fabs(LightVector[0]/LightVector[1]);
 			
 			if(ratio > 1){
 				
@@ -366,8 +354,8 @@ GenerateVertices(const int columns, const int rows, int *vertices){
 void
 RenderVertical( const int width, const int height, const unsigned char sourceColors[], unsigned char targetColors[]){
 	
-	Boolean isTop = LightSourceIsTop();
-	Boolean isLeft = LightSourceIsLeft();
+	Boolean isTop = LightVectorIsTop();
+	Boolean isLeft = LightVectorIsLeft();
 	float preFraction = 0.0;
 	float postFraction = 1.0;
 	float numerator = isTop ? 1.0 : -1.0;
@@ -391,8 +379,8 @@ RenderVertical( const int width, const int height, const unsigned char sourceCol
 	previousHeights = (float *)malloc( sizeof(float)*(width + 1));
 	
 	
-	l1 = LightSource[1];
-	l0 = LightSource[0];
+	l1 = LightVector[1];
+	l0 = LightVector[0];
 
 
 	if(isLeft){
@@ -411,7 +399,7 @@ RenderVertical( const int width, const int height, const unsigned char sourceCol
 	
 	//stepSize ??? how to handle this (externally most likely)
 	//heightDiffernce is the only thing really requisite on step size
-	HeightDifference = numerator*LightSource[2] / LightSource[1]  ;
+	HeightDifference = numerator*LightVector[2] / LightVector[1]  ;
 		
 
 	memset(currentHeights,0,sizeof(float)*width);
@@ -488,8 +476,8 @@ RenderVertical( const int width, const int height, const unsigned char sourceCol
 void
 RenderHorizontal( const int width, const int height, const unsigned char sourceColors[], unsigned char targetColors[]){
 	
-	Boolean isTop = LightSourceIsTop();
-	Boolean isLeft = LightSourceIsLeft();
+	Boolean isTop = LightVectorIsTop();
+	Boolean isLeft = LightVectorIsLeft();
 	float preFraction = 0.0;
 	float postFraction = 1.0;
 	float numerator = isLeft ? 1.0 : -1.0;
@@ -513,8 +501,8 @@ RenderHorizontal( const int width, const int height, const unsigned char sourceC
 	previousHeights = (float *)malloc( sizeof(float)*(height + 1));
 	
 	
-	l1 = LightSource[1];
-	l0 = LightSource[0];
+	l1 = LightVector[1];
+	l0 = LightVector[0];
 	
 	
 	if(isTop){
@@ -532,7 +520,7 @@ RenderHorizontal( const int width, const int height, const unsigned char sourceC
 	
 	//stepSize ??? how to handle this (externally most likely)
 	//heightDiffernce is the only thing really requisite on step size
-	HeightDifference = numerator*LightSource[2] / LightSource[0]  ;
+	HeightDifference = numerator*LightVector[2] / LightVector[0]  ;
 	
 	memset(currentHeights,0,sizeof(float)*width);
 	
@@ -608,7 +596,7 @@ RenderIndeterminatePixel( const float *normals, const unsigned char *sourceColor
 	float colorShift = 0;
 	float dotProduct;
 	
-	dotProduct = normals[0]*LightSource[0] + normals[1]*LightSource[1] + normals[2]*LightSource[2];
+	dotProduct = normals[0]*LightVector[0] + normals[1]*LightVector[1] + normals[2]*LightVector[2];
 	
 	if(dotProduct < 0.0) dotProduct = 0.0;
 	
@@ -660,7 +648,7 @@ RenderDeterminatePixel( const int index, float shadowHeight, const unsigned char
 		if(ratio < 1){
 			colorShift = ratio*ShadeAlpha/255;
 			
-			dotProduct = normals[0]*LightSource[0] + normals[1]*LightSource[1] + normals[2]*LightSource[2];
+			dotProduct = normals[0]*LightVector[0] + normals[1]*LightVector[1] + normals[2]*LightVector[2];
 			
 			if(dotProduct < 0.0) dotProduct = 0.0;
 			
@@ -712,8 +700,8 @@ RenderDeterminatePixel( const int index, float shadowHeight, const unsigned char
 }
 
 Boolean
-LightSourceIsLeft(){
-	if(LightSource[0] > 0){
+LightVectorIsLeft(){
+	if(LightVector[0] > 0){
 		return 0;
 	}
 	
@@ -721,8 +709,8 @@ LightSourceIsLeft(){
 }
 
 Boolean
-LightSourceIsTop(){
-	if(LightSource[1] > 0){
+LightVectorIsTop(){
+	if(LightVector[1] > 0){
 		return 0;
 	}
 	

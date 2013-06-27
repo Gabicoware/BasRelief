@@ -18,12 +18,26 @@
 #define kMaxTapDuration				0.4
 #define kMinAccelerometerTimeout	0.4
 
+//States:
+//Initial - Data is not available yet
+//Interactive - Preview is being updated continuously
+//RenderingFull - Latest Preview is used until Full Rendering is available
+//Rendered - Full Rendering is available and shown
 
+typedef enum _RenderingState{
+    RenderingStateInitial,
+    RenderingStateInteractive,
+    RenderingStateRenderingFull,
+    RenderingStateRendered,
+} RenderingState;
 
 @interface RenderViewController()
 
++(CGImageRef)createImageRefFromRendering:(BasReliefRendering *)rendering;
+
+
 -(void)update;
--(void)renderWithTouch:(UITouch *)touch;
+-(void)updateLightSourceWithTouch:(UITouch *)touch;
 
 
 //RENDER WITH ONE OF THESE THREE ITEMS
@@ -37,9 +51,34 @@
 @end
 
 @implementation RenderViewController{
-    dispatch_queue_t fullRenderingQueue;
-    dispatch_queue_t previewRenderingQueue;
+    dispatch_queue_t renderingQueue;
+    dispatch_queue_t stateLockQueue;
 
+	id <NSObject, RenderViewControllerDelegate > delegate;
+	BasReliefMaterial *material;
+	
+	BasReliefRendering *previewRendering;
+	BasReliefRendering *fullRendering;
+	
+	//This needs to be set from a sub class
+	IBOutlet RenderView *renderView;
+	
+	BOOL isPreviewing;
+    
+	double	accel[3];
+	
+	BOOL isUsingTouch;
+	
+	NSTimeInterval touchStartTime;
+	NSTimeInterval interactionStartTime;
+	
+	
+    NSTimer *animationTimer;
+    NSTimeInterval animationInterval;
+	
+	BOOL returnToMainMenuRequested;
+    
+    RenderingState _renderingState;
 }
 
 
@@ -47,23 +86,61 @@
 	return [OpenGLRenderView class];
 }
 
-
-
 @synthesize delegate, material, isUsingTouch;
 
-/*
-- (void)loadView{
-	
-	
-	RenderView * rView = [[[RenderViewController viewClass] alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
-	[rView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-	[rView setBackgroundColor:[UIColor blackColor]];
-	self.view = rView;
-	
-	[rView release];
-	
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    if((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
+        stateLockQueue = dispatch_queue_create("com.gabicoware.basrelief.StateLock", DISPATCH_QUEUE_SERIAL);
+        renderingQueue = dispatch_queue_create("com.gabicoware.basrelief.Rendering", DISPATCH_QUEUE_SERIAL);
+    }
+    return self;
+
 }
-*/
+
+-(void)setRenderingState:(RenderingState)renderingState{
+	
+    dispatch_sync(stateLockQueue, ^{
+        
+        if (renderingState != _renderingState) {
+            switch (renderingState) {
+                case RenderingStateInitial:
+                    break;
+                case RenderingStateInteractive:
+                    [previewRendering setNeedsUpdate:YES];
+                    [renderView setRendering:previewRendering];
+                    dispatch_async(renderingQueue, ^{
+                        [self renderBasReliefPreview:NULL];
+                    });
+                    break;
+                case RenderingStateRenderingFull:
+                    [renderView setRendering:previewRendering];
+                    
+                    dispatch_async(renderingQueue, ^{
+                        [self renderBasReliefFull:NULL];
+                    });
+                    
+                    break;
+                case RenderingStateRendered:
+                    [renderView setRendering:fullRendering];
+                    break;
+            }
+        }
+        
+        _renderingState = renderingState;
+    });
+
+}
+
+-(RenderingState)renderingState{
+    __block RenderingState renderingState;
+    
+    dispatch_sync(stateLockQueue, ^{
+        renderingState = _renderingState;
+    });
+    
+    return renderingState;
+
+}
 
 - (void)viewWillAppear:(BOOL)animated{
 	[renderView layoutSubviews];
@@ -88,12 +165,11 @@
 	if(!renderView){
 		[self loadView];
         self.wantsFullScreenLayout = YES;
+        self.view.contentMode = UIViewContentModeTop;
 	}
-	
-	//NOTE THE FULL RENDERING SHOULD NOT HAVE A FRAME RATE
-	
-	self.view.contentMode = UIViewContentModeTop;
-	
+    
+    [self setRenderingState:RenderingStateInitial];
+    
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self renderBasReliefBase:NULL];
     });
@@ -128,59 +204,59 @@
 	
 	[fullRendering useCGImage:imageRef material:material];
 	
-	[fullRendering renderBase];	
-	
+	[fullRendering renderBase];
+    
 	[self performSelectorOnMainThread:@selector(baseRenderingIsComplete:) withObject:nil waitUntilDone:NO];
 	
 }
 
 -(void)baseRenderingIsComplete:(void *)n{
 	
-	[renderView setRendering:previewRendering];
-	
+	SetLightSource(0.0f, 0.0f, 1.0f);
+    
+    [self setRenderingState:RenderingStateInteractive];
+    
 	[delegate viewControllerDidFinishPreparing:self];
-	
-	[self showRendering];
-	
+		
 }
 
 -(void)renderBasReliefFull:(void *)n{
 	
 	SetLightSourceDidUpdate();
 	
+    [fullRendering setAsCurrent];
 	[fullRendering render];
-		
+    
+    switch ([self renderingState]) {
+        case RenderingStateRenderingFull:
+            [self setRenderingState:RenderingStateRendered];
+            break;
+        case RenderingStateRendered:
+            NSLog(@"Potential rendering inconsistency, already in Rendered state.");
+            break;
+            
+        default:
+            break;
+    }
+
 }
 
 
 -(void)renderBasReliefPreview:(void *)n{
 	
+    [previewRendering setAsCurrent];
 	[previewRendering render];
 		
 }
-
--(void)showRendering{
-	
-	SetLightSource(0.0f, 0.0f, 1.0f);
-	
-	isInitial = YES;
-	needsFullRendering = YES;
-	isPreviewing = YES;
-	[renderView setRendering:previewRendering];
-	
-}
-
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
 	
 	
 	if(isUsingTouch){
-		if(isPreviewing == NO){
-			[renderView setRendering:previewRendering];
-		}	
-		isPreviewing = YES;
-
-		[self renderWithTouch:[touches anyObject]];
+        
+		[self updateLightSourceWithTouch:[touches anyObject]];
+        [self setRenderingState:RenderingStateInteractive];
+        
 	}
 }
 
@@ -188,18 +264,17 @@
 	
 	
 	if(isUsingTouch){
-		if(isPreviewing){
-			
-			[self renderWithTouch:[touches anyObject]];
-			
-			isPreviewing = NO;
-			
-		}else{
+        
+        //this may lead to a disconnect in the user experience
+        //However, it should be a relatively decent piece of training that
+        //you can only return to the main menu when the full rendering is complete
+        if ([self renderingState] == RenderingStateRendered) {
 			returnToMainMenuRequested = YES;
-		}
-		
-		[renderView setRendering:fullRendering];
-	}else{
+        }else{
+			[self updateLightSourceWithTouch:[touches anyObject]];
+            [self setRenderingState:RenderingStateRenderingFull];
+        }
+    }else{
 		returnToMainMenuRequested = YES;
 	}
 }
@@ -217,28 +292,19 @@
 			
 			SetLightSourceDidUpdate();
 			
-			isPreviewing = YES;
-			
+            [self setRenderingState:RenderingStateInteractive];
+            
 			interactionStartTime = [NSDate timeIntervalSinceReferenceDate];
 		}
 	}
 }
 
 
-- (void)renderWithTouch:(UITouch *)touch {
-	
-	needsFullRendering  = YES;
-	
-	CGSize viewSize;
-	CGPoint currentPosition;	
+- (void)updateLightSourceWithTouch:(UITouch *)touch {
+		
+	CGPoint currentPosition = [touch locationInView:self.view];
+			
 	CGFloat xScalar, yScalar, zScalar, radius, length;
-	
-	currentPosition = [touch locationInView:self.view];
-	
-	viewSize = [self.view bounds].size;
-	
-	currentPosition = [touch locationInView:self.view];
-	
 	radius= 160.0f; //(viewBounds.size.width)/2.0;
 	
 	xScalar = (currentPosition.x - 160.0f)/radius;
@@ -254,68 +320,98 @@
 	//WE DON"T NORMALIZE, THAT IS TAKEN CARE OF BY THE FOLLOWING FUNCTION
 	SetLightSource((float)xScalar, (float)yScalar, (float)zScalar);
 	
-	
 }
 
 - (void)dealloc {
-	
+    
 	[previewRendering dealloc];
 	
 	[fullRendering dealloc];
+	
+    dispatch_release(renderingQueue);
+        
+    dispatch_release(stateLockQueue);
 	
 	[super dealloc];
 }
 
 -(void)update{
 	
-	if(isPreviewing){
-		
-		if(!isInitial && renderView.positionerAlpha < 1.0){
-			renderView.positionerAlpha = renderView.positionerAlpha + 0.02 ;
-			if(renderView.positionerAlpha >= 1.0){
-				renderView.positionerAlpha = 1.0;
-			}
-		}
-		
-		if(!previewRendering.isRendering){
-			
-			
-			if(previewRendering.isNew){
-				previewRendering.isNew = NO;
-				if(renderView.positionerAlpha == 0.0){
-					[renderView drawRendering];
-					[renderView presentImage];
-					
-				}
-				if(isInitial){
-					isPreviewing = NO;
-					isInitial = NO;
-					[renderView setRendering:fullRendering];
-					
-				}
-				
-			}else if(GetLightSourceDidUpdate()){
-				
-				SetLightSourceDidUpdate();
-				
-                if(previewRenderingQueue == NULL){
-                    previewRenderingQueue = dispatch_queue_create("com.gabicoware.basrelief.PreviewRendering", DISPATCH_QUEUE_SERIAL);
+    RenderingState renderingState = [self renderingState];
+        
+    switch(renderingState){
+        case RenderingStateInitial:
+            //do nothing
+            break;
+        case RenderingStateInteractive:
+        {
+            if(renderView.positionerAlpha < 1.0){
+                renderView.positionerAlpha = renderView.positionerAlpha + 0.1 ;
+                if(renderView.positionerAlpha >= 1.0){
+                    renderView.positionerAlpha = 1.0;
                 }
+            }
+            
+            if(!previewRendering.isRendering){
                 
-                dispatch_async(previewRenderingQueue, ^{
-                    [self renderBasReliefPreview:NULL];
-                });
                 
-			}else if( !isUsingTouch && [NSDate timeIntervalSinceReferenceDate] - interactionStartTime > kMinAccelerometerTimeout){
-				
-				isPreviewing = NO;
-				[renderView setRendering:fullRendering];
-				
-			}
-			//then do something
-		}
-	
-	}else{
+                if(GetLightSourceDidUpdate()){
+                    
+                    SetLightSourceDidUpdate();
+                    
+                    dispatch_async(renderingQueue, ^{
+                        [self renderBasReliefPreview:NULL];
+                    });
+                    
+                }else if( !isUsingTouch && [NSDate timeIntervalSinceReferenceDate] - interactionStartTime > kMinAccelerometerTimeout){
+                    
+                    [self setRenderingState:RenderingStateRenderingFull];
+                    
+                }
+                //then do something
+            }
+            
+            [renderView drawRendering];
+            [renderView drawPositionerAtX:GetLightSourceX() Y:GetLightSourceY()];
+            [renderView presentImage];
+
+        }
+            break;
+        case RenderingStateRenderingFull:
+            //do nothing
+            break;
+        case RenderingStateRendered:
+            if(!fullRendering.isRendering){
+                
+                if(fullRendering.isNew){
+                    fullRendering.isNew = NO;
+                    renderView.positionerAlpha = 0.0;
+                    [renderView drawRendering];
+                    [renderView presentImage];
+                }else if(returnToMainMenuRequested){
+                    
+                    returnToMainMenuRequested = NO;
+                    
+                    CGImageRef imageRef;
+                    
+                    imageRef = [RenderViewController createImageRefFromRendering:fullRendering];
+                    
+                    [delegate setRenderingImageRef: imageRef ];
+                    
+                    CGImageRelease(imageRef);
+                    
+                    [self stopAnimation];
+                    
+                    [delegate viewControllerDidFinishViewing:self];
+                    
+                }
+                //then do something
+            }
+            break;
+    }
+    
+    
+	if(renderingState != RenderingStateInteractive){
 		
 		if( renderView.positionerAlpha > 0.0){
 			renderView.positionerAlpha = renderView.positionerAlpha - 0.1 ;
@@ -327,55 +423,11 @@
 			}
 			
 		}
-		
-		if(!fullRendering.isRendering){
-			
-			if(fullRendering.isNew){
-				needsFullRendering = NO;
-				fullRendering.isNew = NO;
-				renderView.positionerAlpha = 0.0;
-				[renderView drawRendering];
-				[renderView presentImage];
-			}else if(needsFullRendering){
-				
-                if(fullRenderingQueue == NULL){
-                    fullRenderingQueue = dispatch_queue_create("com.gabicoware.basrelief.FullRendering", DISPATCH_QUEUE_SERIAL);
-                }
-                dispatch_async(fullRenderingQueue, ^{
-                    [self renderBasReliefFull:NULL];
-                });
-				
-			}else if(returnToMainMenuRequested){
-				
-				returnToMainMenuRequested = NO;
-				
-				CGImageRef imageRef;
-				
-				imageRef = [RenderViewController imageRefFromRendering:fullRendering];
-				
-				[delegate setRenderingImageRef: imageRef ];
-				
-				[self stopAnimation];
-				
-				[delegate viewControllerDidFinishViewing:self];
-				
-			
-			}
-			//then do something
-		}
-		
 	}
-	
-	if(renderView.positionerAlpha > 0.0){
-		[renderView drawRendering];
-		[renderView drawPositionerAtX:GetLightSourceX() Y:GetLightSourceY()];
-		[renderView presentImage];
-	}
-	
 	
 }
 
-+(CGImageRef)imageRefFromRendering:(BasReliefRendering *)rendering{
++(CGImageRef)createImageRefFromRendering:(BasReliefRendering *)rendering{
 	
 	CGContextRef ctx;
 	CGImageRef imageRef;

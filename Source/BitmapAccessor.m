@@ -112,11 +112,8 @@
 			for(j = 0; j < l; j++){
 				
 				heightMap[j] = bytes[j] >> shiftValue;
-				
+                
 			}
-			
-			free(bytes);
-			
 		}
 		
 		CGContextRelease(cgctx);

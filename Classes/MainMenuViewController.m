@@ -82,30 +82,11 @@
 		needsRendering = NO;
 	}else{
 		[self presentModalViewController:renderer animated:NO];
-		[renderer showRendering];
 	}
 	//[self presentModalViewController:renderer animated:NO];
 	
 }
-/*
-- (IBAction)viewFull {
-	
-	[self initializeRenderer];
-	
-	loadingView.hidden = NO;
-	controlsView.hidden = YES;
-	
-	if(needsFullRendering){
-		[renderer prepareFullRendering];
-		needsFullRendering = NO;
-	}else{
-		[renderer showFullRendering];
-		[self presentModalViewController:renderer animated:NO];
-	}
-	//[self presentModalViewController:renderer animated:NO];
-	
-}
-*/
+
 - (void) initializeRenderer{
 	if(renderer == NULL){
 		RenderingValues base = {0.7, 96, 0.7, 32};
@@ -149,16 +130,13 @@
 	//viewFullButton.enabled = NO;
 
 	needsRendering = YES;
-	//needsFullRendering = YES;
 	[self dismissModalViewControllerAnimated:YES];
 	
 	if(formattedImageRef != NULL)
 		CGImageRelease(formattedImageRef);
 	
 	formattedImageRef = CGImageCreateForBasRefliefFormat([image CGImage], CGRectMake(0.0, 0.0, FULL_WIDTH, FULL_HEIGHT));
-	
-	CGImageRetain (formattedImageRef);
-    
+	    
 	imageView.image = [UIImage imageWithCGImage:formattedImageRef];
 	
 	viewButton.enabled = YES;

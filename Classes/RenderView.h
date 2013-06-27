@@ -21,8 +21,6 @@
 
 - (void)drawRendering;
 
-//THE FOLLOWING TWO REALLY THE ONLY CUSTOM METHODS FROM THE ORIGINAL OPENGL PROGRAM
-//GENERATED FROM THE XCODE PROJECT TEMPLATE
 - (void)setRendering:(BasReliefRendering *)rendering;
 
 - (void)drawPositionerAtX:(float)x Y:(float)y;

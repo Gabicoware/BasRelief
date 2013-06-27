@@ -38,10 +38,7 @@
 
 - (void)setRendering:(BasReliefRendering *)rendering{
 	
-	currentRendering = rendering;
-	
-	[currentRendering setAsCurrent];
-
+    currentRendering = rendering;
 	
 }
 

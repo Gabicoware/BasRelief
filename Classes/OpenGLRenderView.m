@@ -222,9 +222,6 @@
 }
 
 - (void)drawRendering {
-
-	if(![currentRendering needsUpdate])
-		return;
 	
 	glMatrixMode(GL_PROJECTION);
     glLoadIdentity();

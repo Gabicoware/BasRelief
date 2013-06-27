@@ -48,10 +48,10 @@ NeedsUpdate();
 
 //Internal functions
 int
-LightSourceIsLeft();
+LightVectorIsLeft();
 
 int
-LightSourceIsTop();
+LightVectorIsTop();
 
 
 #endif /*BRGEOM_H_*/

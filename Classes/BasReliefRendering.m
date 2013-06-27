@@ -129,7 +129,7 @@
 }
 
 -(void)setAsCurrent{
-	
+    
 	SetHeightMap(heightMap);
 	
 	SetNormals(normals);
