@@ -106,7 +106,6 @@ typedef enum _RenderingState{
                 case RenderingStateInitial:
                     break;
                 case RenderingStateInteractive:
-                    [previewRendering setNeedsUpdate:YES];
                     [renderView setRendering:previewRendering];
                     dispatch_async(renderingQueue, ^{
                         [self renderBasReliefPreview:NULL];
@@ -162,11 +161,10 @@ typedef enum _RenderingState{
 }
 
 -(void)prepareRendering {
-	if(!renderView){
-		[self loadView];
-        self.wantsFullScreenLayout = YES;
-        self.view.contentMode = UIViewContentModeTop;
-	}
+    [self view];
+    
+    self.wantsFullScreenLayout = YES;
+    self.view.contentMode = UIViewContentModeTop;
     
     [self setRenderingState:RenderingStateInitial];
     
@@ -212,11 +210,13 @@ typedef enum _RenderingState{
 
 -(void)baseRenderingIsComplete:(void *)n{
 	
+	[delegate viewControllerDidFinishPreparing:self];
+    
+    
 	SetLightSource(0.0f, 0.0f, 1.0f);
     
     [self setRenderingState:RenderingStateInteractive];
     
-	[delegate viewControllerDidFinishPreparing:self];
 		
 }
 
