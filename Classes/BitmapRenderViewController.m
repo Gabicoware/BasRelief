@@ -147,7 +147,7 @@
 	
 	RenderDeterminate( RENDERING_WIDTH, RENDERING_HEIGHT, baseImageArray, baseImageArray);
 	
-	reliefIsRendered = TRUE;
+	reliefIsRendered = YES;
 	
 }
 

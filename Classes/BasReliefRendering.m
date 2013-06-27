@@ -32,34 +32,34 @@
 -(Boolean)needsUpdate{
 	
 	if(forceUpdate){
-		forceUpdate = FALSE;
-		return TRUE;
+		forceUpdate = NO;
+		return YES;
 	}
 	
 	if(locked){
-		return FALSE;
+		return NO;
 	}
 	
 	
 	if(GetLightSourceDidUpdate()){
-		return TRUE;
+		return YES;
 	}
 	
-	return FALSE;
+	return NO;
 	
 	
 }
 
 -(void)setFixedLightSourceX:(float)lightX Y:(float)lightY Z:(float)lightZ{
-	forceUpdate = TRUE;
-	locked = TRUE;
+	forceUpdate = YES;
+	locked = YES;
 	[self setLightSourceX:lightX Y:lightY Z:lightZ];
 	
 }
 
 -(void)setFreeLightSourceX:(float)lightX Y:(float)lightY Z:(float)lightZ{
-	forceUpdate = TRUE;
-	locked = FALSE;	
+	forceUpdate = YES;
+	locked = NO;	
 	[self setLightSourceX:lightX Y:lightY Z:lightZ];
 }
 
@@ -88,11 +88,11 @@
 		light[1] = 0.0;
 		light[2] = 1.0;
 		
-		locked = FALSE;
-		forceUpdate = FALSE;
+		locked = NO;
+		forceUpdate = NO;
 		
-		isRendering = FALSE;
-		isNew = FALSE;
+		isRendering = NO;
+		isNew = NO;
 		
 	}
 	return self;
@@ -106,7 +106,7 @@
 }
 
 -(void)renderBase{
-	forceUpdate = TRUE;
+	forceUpdate = YES;
 
 	RGBArrayFromImagePath( material.materialBundlePath, baseImageArray , width, height);
 	
@@ -148,15 +148,15 @@
 		[self setLightSourceX:GetLightSourceX() Y:GetLightSourceY() Z:GetLightSourceZ()];
 	}
 	
-	self.isRendering = TRUE;
+	self.isRendering = YES;
 	
 	SetLightVector( light[0], light[1], light[2]);
 	
 	RenderDeterminate( width, height, baseImageArray, renderedImageArray);
 	
-	self.isRendering = FALSE;
+	self.isRendering = NO;
 	
-	isNew = TRUE;
+	isNew = YES;
 
 	
 }

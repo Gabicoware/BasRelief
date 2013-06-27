@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MainMenuController.h"
+#import "MainMenuViewController.h"
 
-@class MainMenuController;
+@class MainMenuViewController;
 
 @interface BasReliefAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow					*window;
-    MainMenuController		*viewController;
+    MainMenuViewController		*viewController;
 	UIAccelerationValue			accel[3];
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet MainMenuController *viewController;
+@property (nonatomic, retain) IBOutlet MainMenuViewController *viewController;
 
 @end
 

@@ -7,7 +7,7 @@
 //
 
 #import "BasReliefAppDelegate.h"
-#import "MainMenuController.h"
+#import "MainMenuViewController.h"
 #import "LightSource.h"
 
 #define kAccelerometerFrequency		100.0 // Hz
@@ -23,8 +23,10 @@
     
 	
 	// Override point for customization after app launch    
-    [window addSubview:viewController.view];
     [window makeKeyAndVisible];
+    
+    self.viewController.view.frame = self.window.bounds;
+    
 }
 
 

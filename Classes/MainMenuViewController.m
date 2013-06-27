@@ -6,7 +6,7 @@
 //  Copyright __MyCompanyName__ 2009. All rights reserved.
 //
 
-#import "MainMenuController.h"
+#import "MainMenuViewController.h"
 #import "RenderViewController.h"
 #import "OpenGLRenderViewController.h"
 #import "TextureRenderViewController.h"
@@ -14,18 +14,14 @@
 
 #import "BitmapAccessor.h"
 
+@interface MainMenuViewController()
 
-@interface MainMenuController()
-	- (void) initializeRenderer;
+- (void) initializeRenderer;
 
-	
 @end
 
 
-@implementation MainMenuController
-
-
-
+@implementation MainMenuViewController
 
 +(Class)rendererClass{
 	return [OpenGLRenderViewController class];
@@ -39,6 +35,8 @@
 
 - (void)viewDidLoad{
 	
+    self.wantsFullScreenLayout = YES;
+    
 	segmentControl.selectedSegmentIndex = 1;
 	
 }
@@ -49,7 +47,7 @@
 	
 	picker = [[UIImagePickerController alloc] init];
 	picker.delegate = self;
-	//picker.allowsImageEditing = FALSE;
+	//picker.allowsImageEditing = NO;
 	[self initializeRenderer];
 	//viewFullButton.enabled = NO;	
 	
@@ -61,22 +59,19 @@
 		//UIImagePickerController *picker;
 		//picker.sourceType = UIImagePickerControllerSourceTypeCamera;
 		picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-		[self presentModalViewController:picker animated:TRUE];
+		[self presentModalViewController:picker animated:YES];
 		
-		//All Subviews are fullscreen for simplicity's sake
-		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	}
 	
 }
 
 - ( void ) viewControllerDidFinishPreparing: ( UIViewController * ) viewer{
-	[self presentModalViewController:viewer animated:FALSE];
+	[self presentModalViewController:viewer animated:NO];
 	
 }
 
 
 - (IBAction)viewRendering {
-	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	
 	[self initializeRenderer];
 	
@@ -87,18 +82,17 @@
 	
 	if(needsRendering){
 		[renderer prepareRendering];
-		needsRendering = FALSE;
+		needsRendering = NO;
 	}else{
-		[self presentModalViewController:renderer animated:FALSE];
+		[self presentModalViewController:renderer animated:NO];
 		[renderer showRendering];
 	}
-	//[self presentModalViewController:renderer animated:FALSE];
+	//[self presentModalViewController:renderer animated:NO];
 	
 }
 /*
 - (IBAction)viewFull {
-	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
-		
+	
 	[self initializeRenderer];
 	
 	loadingView.hidden = NO;
@@ -106,12 +100,12 @@
 	
 	if(needsFullRendering){
 		[renderer prepareFullRendering];
-		needsFullRendering = FALSE;
+		needsFullRendering = NO;
 	}else{
 		[renderer showFullRendering];
-		[self presentModalViewController:renderer animated:FALSE];
+		[self presentModalViewController:renderer animated:NO];
 	}
-	//[self presentModalViewController:renderer animated:FALSE];
+	//[self presentModalViewController:renderer animated:NO];
 	
 }
 */
@@ -120,7 +114,7 @@
 		RenderingValues base = {0.7, 96, 0.7, 32};
 		RenderingValues shadow = {0.7, 96, 0.7, 32};
 
-		renderer = [[[MainMenuController rendererClass] alloc] init];
+		renderer = [[[MainMenuViewController rendererClass] alloc] init];
 		material = [[BasReliefMaterial alloc] init];
 		
 		material.materialBundlePath = @"sandstone.png";
@@ -157,37 +151,35 @@
 	//viewPreviewButton.enabled = NO;
 	//viewFullButton.enabled = NO;
 
-	needsRendering = TRUE;
-	//needsFullRendering = TRUE;
-	[[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
-	[self dismissModalViewControllerAnimated:TRUE];
-	sourceImageRef = [image CGImage];
-		
+	needsRendering = YES;
+	//needsFullRendering = YES;
+	[self dismissModalViewControllerAnimated:YES];
+	
 	if(formattedImageRef != NULL)
 		CGImageRelease(formattedImageRef);
 	
-	formattedImageRef = CGImageCreateForBasRefliefFormat(sourceImageRef, CGRectMake(0.0, 0.0, FULL_WIDTH, FULL_HEIGHT));
+	formattedImageRef = CGImageCreateForBasRefliefFormat([image CGImage], CGRectMake(0.0, 0.0, FULL_WIDTH, FULL_HEIGHT));
 	
 	CGImageRetain (formattedImageRef);
     
 	imageView.image = [UIImage imageWithCGImage:formattedImageRef];
 	
-	viewButton.enabled = TRUE;
-	//viewFullButton.enabled = TRUE;
-	//viewFullButton.enabled = FALSE;
+	viewButton.enabled = YES;
+	//viewFullButton.enabled = YES;
+	//viewFullButton.enabled = NO;
 	
+    
 }
 
 
 - ( void ) viewControllerDidFinishViewing: ( UIViewController * ) viewer{
 	//viewFullButton.enabled = YES;
 	[self dismissModalViewControllerAnimated:NO];
-	[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-	[self dismissModalViewControllerAnimated:TRUE];
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 

@@ -10,7 +10,7 @@
 #import "RenderViewController.h"
 #import "BasReliefMaterial.h"
 
-@interface MainMenuController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate, RenderViewControllerDelegate>{
+@interface MainMenuViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate, RenderViewControllerDelegate>{
 
     BasReliefMaterial * material;
 	
@@ -20,7 +20,6 @@
 
 	
 	CGImageRef destinationImageRef;
-	CGImageRef sourceImageRef;
 	
 	CGImageRef imageRef;
 	

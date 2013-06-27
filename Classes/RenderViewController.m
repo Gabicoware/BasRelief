@@ -90,6 +90,7 @@
 -(void)prepareRendering {
 	if(!renderView){
 		[self loadView];
+        self.wantsFullScreenLayout = YES;
 	}
 	
 	
@@ -279,15 +280,6 @@
 	
 	
 }
-
-- (void)viewDidLoad{
-	[super viewDidLoad];
-    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / kAccelerometerFrequency)];
-	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
-}
-
-
-
 
 - (void)dealloc {
 	

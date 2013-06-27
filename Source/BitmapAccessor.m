@@ -279,6 +279,8 @@
 		
 		CGContextRef bitmap;
 		
+        CGImageRef rotatedImageRef = NULL;
+        
 		if((sourceWidth > sourceHeight && targetRect.size.width < targetRect.size.height)  || (sourceWidth < sourceHeight && targetRect.size.width > targetRect.size.height)){
 			
 			//Rotation
@@ -288,22 +290,17 @@
 			CGContextRotateCTM (bitmap, radians(-90));
 			
 			CGContextDrawImage(bitmap, CGRectMake(( -1.0 * sourceWidth ) , 0.0, sourceWidth, sourceHeight ), imageRef);
-			
-			CGImageRelease(imageRef);
-			
-			imageRef = CGBitmapContextCreateImage(bitmap);
+						
+			rotatedImageRef = CGBitmapContextCreateImage(bitmap);
 			
 			CGContextRelease(bitmap);
 			
-			sourceWidth = CGImageGetWidth(imageRef);
-			sourceHeight = CGImageGetHeight(imageRef);
+			sourceWidth = CGImageGetWidth(rotatedImageRef);
+			sourceHeight = CGImageGetHeight(rotatedImageRef);
 			
 		}
 		
-		
 		CGRect crop = CGRectMake(0.0, 0.0, sourceWidth, sourceHeight);
-		
-		
 		
 		if(sourceWidth / sourceHeight > targetRect.size.width / targetRect.size.height ){
 			crop.size.width = ( sourceHeight / targetRect.size.height ) * targetRect.size.width ;
@@ -315,22 +312,24 @@
 		}
 		
 		//NSLog(@"%i, %f, %i, %f, %f, %f",sourceWidth,crop.size.width,sourceHeight,crop.size.height, crop.origin.x, crop.origin.y );
-
-		CGImageRef croppedImage = CGImageCreateWithImageInRect( imageRef, crop );
+        
+		CGImageRef croppedImageRef = CGImageCreateWithImageInRect( rotatedImageRef == NULL ? imageRef : rotatedImageRef, crop );
 		
-		CGImageRelease(imageRef);
+        if(rotatedImageRef != NULL){
+            CGImageRelease(rotatedImageRef);
+        }
 		
 		// Build a bitmap context that's the size of the thumbRect
 		bitmap = CreateBitmapContext(	targetRect.size.width,	targetRect.size.height, GRAYSCALE);
 		
 		// Draw into the context, this scales the image
-		CGContextDrawImage(bitmap, targetRect, croppedImage);
+		CGContextDrawImage(bitmap, targetRect, croppedImageRef);
 		
-		CGImageRelease(croppedImage);
+		CGImageRelease(croppedImageRef);
 		
-		croppedImage = CGBitmapContextCreateImage(bitmap);
+		CGImageRef result = CGBitmapContextCreateImage(bitmap);
 		
-		return croppedImage;
+		return result;
 		
 	}
 	
