@@ -3,7 +3,7 @@
 //  BasRelief
 //
 //  Created by Daniel Mueller on 1/23/09.
-//  Copyright 2013 Gabicoware LLC. All rights reserved.
+//  Copyright Gabicoware LLC 2013. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>

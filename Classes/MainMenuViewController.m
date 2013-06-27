@@ -3,14 +3,11 @@
 //  BasRelief
 //
 //  Created by Daniel Mueller on 1/17/09.
-//  Copyright __MyCompanyName__ 2009. All rights reserved.
+//  Copyright Gabicoware LLC 2013. All rights reserved.
 //
 
 #import "MainMenuViewController.h"
 #import "RenderViewController.h"
-#import "OpenGLRenderViewController.h"
-#import "TextureRenderViewController.h"
-#import "BitmapRenderViewController.h"
 
 #import "BitmapAccessor.h"
 
@@ -24,7 +21,7 @@
 @implementation MainMenuViewController
 
 +(Class)rendererClass{
-	return [OpenGLRenderViewController class];
+	return [RenderViewController class];
 }
 
 - (CGImageRef) getImageRef{

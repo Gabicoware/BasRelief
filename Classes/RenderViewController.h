@@ -3,7 +3,7 @@
 //  BasRelief
 //
 //  Created by Daniel Mueller on 6/15/09.
-//  Copyright 2013 Gabicoware LLC. All rights reserved.
+//  Copyright Gabicoware LLC 2013. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -24,9 +24,7 @@
 	IBOutlet RenderView *renderView;
 	
 	BOOL isPreviewing;
-	
-	NSThread * renderThread;
-	
+		
 	double	accel[3];
 	
 	BOOL isUsingTouch;

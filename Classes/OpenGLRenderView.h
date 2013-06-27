@@ -3,7 +3,7 @@
 //  BasRelief
 //
 //  Created by Daniel Mueller on 1/23/09.
-//  Copyright 2013 Gabicoware LLC. All rights reserved.
+//  Copyright Gabicoware LLC 2013. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -14,9 +14,10 @@
 #import "RenderView.h"
 
 /*
- This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
- The view content is basically an EAGL surface you render your OpenGL scene into.
- Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
+ This is a concrete OpenGL implementation of the renderView abstract class.
+ Originally there were several different implementations, including bitmap 
+ and OpenGL texture rendering, however this seems to give us the bes performance.
+ 
  */
 @interface OpenGLRenderView : RenderView {
         

@@ -3,7 +3,7 @@
 //  BasRelief
 //
 //  Created by Daniel Mueller on 8/10/09.
-//  Copyright 2013 Gabicoware LLC. All rights reserved.
+//  Copyright Gabicoware LLC 2013. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

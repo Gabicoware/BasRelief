@@ -3,7 +3,7 @@
 //  BasRelief
 //
 //  Created by Daniel Mueller on 6/15/09.
-//  Copyright 2013 Gabicoware LLC. All rights reserved.
+//  Copyright Gabicoware LLC 2013. All rights reserved.
 //
 
 #import "BitmapAccessor.h"
@@ -26,8 +26,6 @@
 -(void)renderWithTouch:(UITouch *)touch;
 
 
--(void)renderOnThreadWithSelector:(SEL)sel;
-
 //RENDER WITH ONE OF THESE THREE ITEMS
 -(void)renderBasReliefBase:(void *)n;
 -(void)renderBasReliefFull:(void *)n;
@@ -35,15 +33,14 @@
 
 //AND CALL BACK ON COMPLETION ONE OF THE FOLLOWING
 -(void)baseRenderingIsComplete:(void *)n;
--(void)cleanThread:(void *)n;
-
-
-
-@property (nonatomic, retain) NSThread *renderThread;
 
 @end
 
-@implementation RenderViewController
+@implementation RenderViewController{
+    dispatch_queue_t fullRenderingQueue;
+    dispatch_queue_t previewRenderingQueue;
+
+}
 
 
 +(Class)viewClass{
@@ -52,7 +49,7 @@
 
 
 
-@synthesize delegate, material, renderThread, isUsingTouch;
+@synthesize delegate, material, isUsingTouch;
 
 /*
 - (void)loadView{
@@ -93,15 +90,14 @@
         self.wantsFullScreenLayout = YES;
 	}
 	
-	
-	
 	//NOTE THE FULL RENDERING SHOULD NOT HAVE A FRAME RATE
 	
 	self.view.contentMode = UIViewContentModeTop;
 	
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self renderBasReliefBase:NULL];
+    });
 	
-	[self renderOnThreadWithSelector:@selector(renderBasReliefBase:)];
-
 }
 
 -(void)renderBasReliefBase:(void *)n{
@@ -140,8 +136,6 @@
 
 -(void)baseRenderingIsComplete:(void *)n{
 	
-	[self cleanThread:nil];
-	
 	[renderView setRendering:previewRendering];
 	
 	[delegate viewControllerDidFinishPreparing:self];
@@ -155,33 +149,15 @@
 	SetLightSourceDidUpdate();
 	
 	[fullRendering render];
-	
-	[self performSelectorOnMainThread:@selector(cleanThread:) withObject:nil waitUntilDone:NO];
-	
+		
 }
 
 
 -(void)renderBasReliefPreview:(void *)n{
 	
 	[previewRendering render];
-	
-	[self performSelectorOnMainThread:@selector(cleanThread:) withObject:nil waitUntilDone:NO];
-	
+		
 }
-
-
--(void)cleanThread:(void *)n{
-	
-	[renderThread cancel];
-    
-	while (renderThread && ![renderThread isFinished]) { // Wait for the thread to finish.
-        [NSThread sleepForTimeInterval:0.1];
-    }
-	
-	renderThread = nil;
-	
-}
-
 
 -(void)showRendering{
 	
@@ -322,11 +298,14 @@
 				
 				SetLightSourceDidUpdate();
 				
-				NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(renderBasReliefPreview:) object:nil];
-				self.renderThread = thread;
-				[thread release];
-			
-				[renderThread start];
+                if(previewRenderingQueue == NULL){
+                    previewRenderingQueue = dispatch_queue_create("com.gabicoware.basrelief.PreviewRendering", DISPATCH_QUEUE_SERIAL);
+                }
+                
+                dispatch_async(previewRenderingQueue, ^{
+                    [self renderBasReliefPreview:NULL];
+                });
+                
 			}else if( !isUsingTouch && [NSDate timeIntervalSinceReferenceDate] - interactionStartTime > kMinAccelerometerTimeout){
 				
 				isPreviewing = NO;
@@ -357,9 +336,14 @@
 				renderView.positionerAlpha = 0.0;
 				[renderView drawRendering];
 				[renderView presentImage];
-			}else if(needsFullRendering && self.renderThread == nil){
+			}else if(needsFullRendering){
 				
-				[self renderOnThreadWithSelector:@selector(renderBasReliefFull:)];
+                if(fullRenderingQueue == NULL){
+                    fullRenderingQueue = dispatch_queue_create("com.gabicoware.basrelief.FullRendering", DISPATCH_QUEUE_SERIAL);
+                }
+                dispatch_async(fullRenderingQueue, ^{
+                    [self renderBasReliefFull:NULL];
+                });
 				
 			}else if(returnToMainMenuRequested){
 				
@@ -391,16 +375,6 @@
 	
 }
 
--(void)renderOnThreadWithSelector:(SEL)sel{
-	
-	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:sel object:nil];
-	self.renderThread = thread;
-	[thread release];
-	
-	[renderThread start];
-	
-}
-
 +(CGImageRef)imageRefFromRendering:(BasReliefRendering *)rendering{
 	
 	CGContextRef ctx;
@@ -414,10 +388,6 @@
 	
 	return imageRef;
 }
-
-
-
-
 
 
 @synthesize animationInterval;

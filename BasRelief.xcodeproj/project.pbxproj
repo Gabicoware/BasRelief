@@ -17,22 +17,15 @@
 		770921510FF668AD001E8115 /* BasReliefRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = 770921500FF668AD001E8115 /* BasReliefRendering.m */; };
 		771AA96C0F34BE2500E5055D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 771AA96B0F34BE2500E5055D /* Icon.png */; };
 		771AA9720F34C09400E5055D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 771AA9710F34C09400E5055D /* Default.png */; };
-		771B37BE0FE379B600D9013D /* BitmapRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771B37BD0FE379B600D9013D /* BitmapRenderViewController.m */; };
 		774C49F10FE73F06009821E2 /* RenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 774C49F00FE73F06009821E2 /* RenderViewController.m */; };
-		775120FA0F296A3F00A0BD61 /* OpenGLRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775120F90F296A3F00A0BD61 /* OpenGLRenderViewController.m */; };
 		775A630A0F51120F00E4BF1D /* sandstone.png in Resources */ = {isa = PBXBuildFile; fileRef = 775A63090F51120F00E4BF1D /* sandstone.png */; };
 		777855A71041A24700CDFB22 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777855A61041A24700CDFB22 /* RenderView.m */; };
-		777856AA1041C1C500CDFB22 /* BitmapRenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777856A91041C1C500CDFB22 /* BitmapRenderViewController.xib */; };
-		778026460FE464A900388B98 /* BitmapRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 778026450FE464A900388B98 /* BitmapRenderView.m */; };
 		77826613177BA15B00694299 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77826612177BA15B00694299 /* Default-568h@2x.png */; };
-		77917B0C103862A500B29143 /* TextureRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77917B09103862A500B29143 /* TextureRenderView.m */; };
-		77917B0D103862A500B29143 /* TextureRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77917B0B103862A500B29143 /* TextureRenderViewController.m */; };
 		7795D845102B007400B4CB1C /* LightSource.c in Sources */ = {isa = PBXBuildFile; fileRef = 7795D844102B007400B4CB1C /* LightSource.c */; };
-		77A31C7410394B54004890C4 /* TextureRenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77A31C7310394B54004890C4 /* TextureRenderViewController.xib */; };
 		77B0FAA3107A7CA900C6C9CB /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MainMenuViewController.xib */; };
 		77D4D6C910310D6F0049D8CC /* BasReliefMaterial.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D4D6C810310D6F0049D8CC /* BasReliefMaterial.m */; };
 		77D807C90F2AB7C700ACFE7E /* OpenGLRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D807C80F2AB7C700ACFE7E /* OpenGLRenderView.m */; };
-		77D808060F2ABA0700ACFE7E /* OpenGLRenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D808050F2ABA0700ACFE7E /* OpenGLRenderViewController.xib */; };
+		77D808060F2ABA0700ACFE7E /* RenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D808050F2ABA0700ACFE7E /* RenderViewController.xib */; };
 		77D808950F2ABEB000ACFE7E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D808940F2ABEB000ACFE7E /* OpenGLES.framework */; };
 		77D8089F0F2ABF4700ACFE7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D8089E0F2ABF4700ACFE7E /* QuartzCore.framework */; };
 		77DE97C110246059000153F3 /* BitmapAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DE97BE10246059000153F3 /* BitmapAccessor.m */; };
@@ -56,32 +49,20 @@
 		770921500FF668AD001E8115 /* BasReliefRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasReliefRendering.m; sourceTree = "<group>"; };
 		771AA96B0F34BE2500E5055D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		771AA9710F34C09400E5055D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		771B37BC0FE379B600D9013D /* BitmapRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapRenderViewController.h; sourceTree = "<group>"; };
-		771B37BD0FE379B600D9013D /* BitmapRenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapRenderViewController.m; sourceTree = "<group>"; };
 		774C49EF0FE73F06009821E2 /* RenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewController.h; sourceTree = "<group>"; };
 		774C49F00FE73F06009821E2 /* RenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewController.m; sourceTree = "<group>"; };
-		775120F90F296A3F00A0BD61 /* OpenGLRenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLRenderViewController.m; sourceTree = "<group>"; };
 		775A63090F51120F00E4BF1D /* sandstone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sandstone.png; sourceTree = "<group>"; };
 		777855A51041A24700CDFB22 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
 		777855A61041A24700CDFB22 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
-		777856A91041C1C500CDFB22 /* BitmapRenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BitmapRenderViewController.xib; sourceTree = "<group>"; };
-		778026440FE464A900388B98 /* BitmapRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapRenderView.h; sourceTree = "<group>"; };
-		778026450FE464A900388B98 /* BitmapRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitmapRenderView.m; sourceTree = "<group>"; };
 		778026E30FE513DA00388B98 /* RenderViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewControllerDelegate.h; sourceTree = "<group>"; };
 		77826612177BA15B00694299 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		77917B07103862A500B29143 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderViewController.h; sourceTree = "<group>"; };
-		77917B08103862A500B29143 /* TextureRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureRenderView.h; sourceTree = "<group>"; };
-		77917B09103862A500B29143 /* TextureRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureRenderView.m; sourceTree = "<group>"; };
-		77917B0A103862A500B29143 /* TextureRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureRenderViewController.h; sourceTree = "<group>"; };
-		77917B0B103862A500B29143 /* TextureRenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureRenderViewController.m; sourceTree = "<group>"; };
 		7795D843102B007400B4CB1C /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
 		7795D844102B007400B4CB1C /* LightSource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LightSource.c; sourceTree = "<group>"; };
-		77A31C7310394B54004890C4 /* TextureRenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextureRenderViewController.xib; sourceTree = "<group>"; };
 		77D4D6C710310D6F0049D8CC /* BasReliefMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasReliefMaterial.h; sourceTree = "<group>"; };
 		77D4D6C810310D6F0049D8CC /* BasReliefMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasReliefMaterial.m; sourceTree = "<group>"; };
 		77D807C70F2AB7C700ACFE7E /* OpenGLRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderView.h; sourceTree = "<group>"; };
 		77D807C80F2AB7C700ACFE7E /* OpenGLRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLRenderView.m; sourceTree = "<group>"; };
-		77D808050F2ABA0700ACFE7E /* OpenGLRenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OpenGLRenderViewController.xib; sourceTree = "<group>"; };
+		77D808050F2ABA0700ACFE7E /* RenderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RenderViewController.xib; sourceTree = "<group>"; };
 		77D808940F2ABEB000ACFE7E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		77D8089E0F2ABF4700ACFE7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		77DE97BD10246059000153F3 /* BitmapAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapAccessor.h; sourceTree = "<group>"; };
@@ -154,9 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				2899E5210DE3E06400AC0155 /* MainMenuViewController.xib */,
-				777856A91041C1C500CDFB22 /* BitmapRenderViewController.xib */,
-				77D808050F2ABA0700ACFE7E /* OpenGLRenderViewController.xib */,
-				77A31C7310394B54004890C4 /* TextureRenderViewController.xib */,
+				77D808050F2ABA0700ACFE7E /* RenderViewController.xib */,
 				77826612177BA15B00694299 /* Default-568h@2x.png */,
 				771AA9710F34C09400E5055D /* Default.png */,
 				771AA96B0F34BE2500E5055D /* Icon.png */,
@@ -193,12 +172,8 @@
 		77942551102FA34F00EE9063 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				778026440FE464A900388B98 /* BitmapRenderView.h */,
-				778026450FE464A900388B98 /* BitmapRenderView.m */,
 				77D807C70F2AB7C700ACFE7E /* OpenGLRenderView.h */,
 				77D807C80F2AB7C700ACFE7E /* OpenGLRenderView.m */,
-				77917B08103862A500B29143 /* TextureRenderView.h */,
-				77917B09103862A500B29143 /* TextureRenderView.m */,
 				777855A51041A24700CDFB22 /* RenderView.h */,
 				777855A61041A24700CDFB22 /* RenderView.m */,
 			);
@@ -212,12 +187,6 @@
 				28D7ACF70DDB3853001CB0EB /* MainMenuViewController.m */,
 				774C49EF0FE73F06009821E2 /* RenderViewController.h */,
 				774C49F00FE73F06009821E2 /* RenderViewController.m */,
-				771B37BC0FE379B600D9013D /* BitmapRenderViewController.h */,
-				771B37BD0FE379B600D9013D /* BitmapRenderViewController.m */,
-				77917B07103862A500B29143 /* OpenGLRenderViewController.h */,
-				775120F90F296A3F00A0BD61 /* OpenGLRenderViewController.m */,
-				77917B0A103862A500B29143 /* TextureRenderViewController.h */,
-				77917B0B103862A500B29143 /* TextureRenderViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -286,12 +255,10 @@
 			files = (
 				77B0FAA3107A7CA900C6C9CB /* MainMenuViewController.xib in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				77D808060F2ABA0700ACFE7E /* OpenGLRenderViewController.xib in Resources */,
+				77D808060F2ABA0700ACFE7E /* RenderViewController.xib in Resources */,
 				771AA96C0F34BE2500E5055D /* Icon.png in Resources */,
 				771AA9720F34C09400E5055D /* Default.png in Resources */,
 				775A630A0F51120F00E4BF1D /* sandstone.png in Resources */,
-				77A31C7410394B54004890C4 /* TextureRenderViewController.xib in Resources */,
-				777856AA1041C1C500CDFB22 /* BitmapRenderViewController.xib in Resources */,
 				77826613177BA15B00694299 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,18 +273,13 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* BasReliefAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* MainMenuViewController.m in Sources */,
-				775120FA0F296A3F00A0BD61 /* OpenGLRenderViewController.m in Sources */,
 				77D807C90F2AB7C700ACFE7E /* OpenGLRenderView.m in Sources */,
-				771B37BE0FE379B600D9013D /* BitmapRenderViewController.m in Sources */,
-				778026460FE464A900388B98 /* BitmapRenderView.m in Sources */,
 				774C49F10FE73F06009821E2 /* RenderViewController.m in Sources */,
 				770921510FF668AD001E8115 /* BasReliefRendering.m in Sources */,
 				77DE97C110246059000153F3 /* BitmapAccessor.m in Sources */,
 				77DE97C210246059000153F3 /* brgreom.c in Sources */,
 				7795D845102B007400B4CB1C /* LightSource.c in Sources */,
 				77D4D6C910310D6F0049D8CC /* BasReliefMaterial.m in Sources */,
-				77917B0C103862A500B29143 /* TextureRenderView.m in Sources */,
-				77917B0D103862A500B29143 /* TextureRenderViewController.m in Sources */,
 				777855A71041A24700CDFB22 /* RenderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
