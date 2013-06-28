@@ -21,6 +21,7 @@
 
 @property (weak, atomic) IBOutlet UIButton *tiltButton;
 @property (weak, atomic) IBOutlet UIButton *touchButton;
+@property (weak, atomic) IBOutlet UIImageView *highlightImageView;
 
 @end
 
@@ -167,6 +168,13 @@
 	//viewFullButton.enabled = YES;
 	//viewFullButton.enabled = NO;
 	
+    CGRect highlightFrame = self.highlightImageView.frame;
+    
+    CGRect viewButtonFrame = viewButton.frame;
+    
+    highlightFrame.origin.x = viewButtonFrame.origin.x + viewButtonFrame.size.width/2.0 - highlightFrame.size.width/2.0;
+    
+    self.highlightImageView.frame = highlightFrame;
     
 }
 
@@ -174,6 +182,15 @@
 - ( void ) viewControllerDidFinishViewing: ( UIViewController * ) viewer{
 	//viewFullButton.enabled = YES;
     [self dismissViewControllerAnimated:NO completion:NULL];
+    
+    CGRect highlightFrame = self.highlightImageView.frame;
+    
+    CGRect shareButtonFrame = saveImageButton.frame;
+    
+    highlightFrame.origin.x = shareButtonFrame.origin.x + shareButtonFrame.size.width/2.0 - highlightFrame.size.width/2.0;
+    
+    self.highlightImageView.frame = highlightFrame;
+
 }
 
 
