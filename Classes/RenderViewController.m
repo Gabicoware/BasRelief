@@ -45,9 +45,6 @@ typedef enum _RenderingState{
 -(void)renderBasReliefFull:(void *)n;
 -(void)renderBasReliefPreview:(void *)n;
 
-//AND CALL BACK ON COMPLETION ONE OF THE FOLLOWING
--(void)baseRenderingIsComplete:(void *)n;
-
 @end
 
 @implementation RenderViewController{
@@ -143,10 +140,10 @@ typedef enum _RenderingState{
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-	[renderView layoutSubviews];
+    [renderView setNeedsLayout];
 	//WE EXAMINE 20 times per second
 	[self setAnimationInterval:1.0/20.0];
-	
+	[self update];
 }
 - (void)viewDidAppear:(BOOL)animated{	
 	[self startAnimation];
@@ -162,9 +159,10 @@ typedef enum _RenderingState{
 }
 
 -(void)prepareRendering {
+    self.wantsFullScreenLayout = YES;
+    
     [self view];
     
-    self.wantsFullScreenLayout = YES;
     self.view.contentMode = UIViewContentModeTop;
     
     hasInteracted = NO;
@@ -206,22 +204,24 @@ typedef enum _RenderingState{
 	
 	[fullRendering renderBase];
     
-	[self performSelectorOnMainThread:@selector(baseRenderingIsComplete:) withObject:nil waitUntilDone:NO];
-    
     CGImageRelease(imageRef);
-	
-}
-
--(void)baseRenderingIsComplete:(void *)n{
-	
-	[delegate viewControllerDidFinishPreparing:self];
-    
     
 	SetLightSource(0.0f, 0.0f, 1.0f);
     
-    [self setRenderingState:RenderingStateInteractive];
+    [renderView setRendering:previewRendering];
+    //the first render happens as part of the initial setup
+    [previewRendering setAsCurrent];
+	[previewRendering render];
     
-		
+    //we do all this inline, instead of using the setter
+    dispatch_sync(stateLockQueue, ^{
+        
+        _renderingState = RenderingStateInteractive;
+        
+    });
+    
+	[(id)delegate performSelectorOnMainThread:@selector(viewControllerDidFinishPreparing:) withObject:self waitUntilDone:NO];
+    
 }
 
 -(void)renderBasReliefFull:(void *)n{
@@ -315,10 +315,10 @@ typedef enum _RenderingState{
 	CGPoint currentPosition = [touch locationInView:self.view];
 			
 	CGFloat xScalar, yScalar, zScalar, radius, length;
-	radius= 160.0f; //(viewBounds.size.width)/2.0;
+	radius= (self.view.bounds.size.width)/2.0;
 	
-	xScalar = (currentPosition.x - 160.0f)/radius;
-	yScalar = (currentPosition.y - 240.0f)/radius;
+	xScalar = (currentPosition.x - (self.view.bounds.size.width)/2.0)/radius;
+	yScalar = (currentPosition.y - (self.view.bounds.size.height)/2.0)/radius;
 	zScalar = 0.0;
 	length = sqrtf( xScalar*xScalar + yScalar*yScalar );
 	

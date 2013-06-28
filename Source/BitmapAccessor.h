@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define FULL_HEIGHT 480.0
-#define FULL_WIDTH 320.0
+#define FULL_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define FULL_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define FULL_SHIFT 1
 
-#define PREVIEW_HEIGHT 120.0
-#define PREVIEW_WIDTH 80.0
+#define PREVIEW_HEIGHT FULL_HEIGHT/4.0
+#define PREVIEW_WIDTH FULL_WIDTH/4.0
 #define PREVIEW_SHIFT 3
 
 #define GRAYSCALE 0

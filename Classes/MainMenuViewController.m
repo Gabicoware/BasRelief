@@ -58,12 +58,12 @@
 	
 }
 
--(void)didTapTouchButton{
+-(IBAction)didTapTouchButton{
     self.touchButton.selected = YES;
     self.tiltButton.selected = NO;
 }
 
--(void)didTapTiltButton{
+-(IBAction)didTapTiltButton{
     self.touchButton.selected = NO;
     self.tiltButton.selected = YES;
 }
