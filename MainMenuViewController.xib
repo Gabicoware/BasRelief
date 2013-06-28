@@ -134,11 +134,16 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 								</object>
+								<object class="NSColor" key="IBUISelectedTitleColor" id="558888403">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4wNDk5ODQwMjA1OCAwLjY1MzA2MTIyNDUgMAA</bytes>
+								</object>
 								<reference key="IBUINormalTitleColor" ref="869268540"/>
-								<object class="NSColor" key="IBUINormalTitleShadowColor" id="1048209685">
+								<object class="NSColor" key="IBUIDisabledTitleShadowColor" id="1048209685">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="1048209685"/>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1033276623">
 									<string key="name">Helvetica-Light</string>
 									<string key="family">Helvetica</string>
@@ -168,7 +173,9 @@
 								<string key="IBUINormalTitle">Camera</string>
 								<reference key="IBUIHighlightedTitleColor" ref="603257625"/>
 								<reference key="IBUIDisabledTitleColor" ref="842292583"/>
+								<reference key="IBUISelectedTitleColor" ref="558888403"/>
 								<reference key="IBUINormalTitleColor" ref="869268540"/>
+								<reference key="IBUIDisabledTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUINormalTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUIFontDescription" ref="1033276623"/>
 								<reference key="IBUIFont" ref="895014277"/>
@@ -191,11 +198,9 @@
 								<string key="IBUINormalTitle">Relief</string>
 								<reference key="IBUIHighlightedTitleColor" ref="603257625"/>
 								<reference key="IBUIDisabledTitleColor" ref="842292583"/>
+								<reference key="IBUISelectedTitleColor" ref="558888403"/>
 								<reference key="IBUINormalTitleColor" ref="869268540"/>
-								<object class="NSColor" key="IBUIDisabledTitleShadowColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC40ODM2OTU2MyAwLjQ4MzY5NTYzIDAuNDgzNjk1NjMAA</bytes>
-								</object>
+								<reference key="IBUIDisabledTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUINormalTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUIFontDescription" ref="1033276623"/>
 								<reference key="IBUIFont" ref="895014277"/>
@@ -218,11 +223,9 @@
 								<string key="IBUINormalTitle">Share</string>
 								<reference key="IBUIHighlightedTitleColor" ref="603257625"/>
 								<reference key="IBUIDisabledTitleColor" ref="842292583"/>
+								<reference key="IBUISelectedTitleColor" ref="558888403"/>
 								<reference key="IBUINormalTitleColor" ref="869268540"/>
-								<object class="NSColor" key="IBUIDisabledTitleShadowColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC40OTQ1NjUxOSAwLjQ5NDU2NTE5IDAuNDk0NTY1MTkAA</bytes>
-								</object>
+								<reference key="IBUIDisabledTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUINormalTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUIFontDescription" ref="1033276623"/>
 								<reference key="IBUIFont" ref="895014277"/>
@@ -245,15 +248,9 @@
 								<string key="IBUINormalTitle">Tilt</string>
 								<reference key="IBUIHighlightedTitleColor" ref="603257625"/>
 								<reference key="IBUIDisabledTitleColor" ref="842292583"/>
-								<object class="NSColor" key="IBUISelectedTitleColor" id="352089959">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4wNDk5ODQwMjA1OCAwLjY1MzA2MTIyNDUgMAA</bytes>
-								</object>
+								<reference key="IBUISelectedTitleColor" ref="558888403"/>
 								<reference key="IBUINormalTitleColor" ref="869268540"/>
-								<object class="NSColor" key="IBUIDisabledTitleShadowColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC40OTQ1NjUxOSAwLjQ5NDU2NTE5IDAuNDk0NTY1MTkAA</bytes>
-								</object>
+								<reference key="IBUIDisabledTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUINormalTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUIFontDescription" ref="1033276623"/>
 								<reference key="IBUIFont" ref="895014277"/>
@@ -275,12 +272,9 @@
 								<string key="IBUINormalTitle">Touch</string>
 								<reference key="IBUIHighlightedTitleColor" ref="603257625"/>
 								<reference key="IBUIDisabledTitleColor" ref="842292583"/>
-								<reference key="IBUISelectedTitleColor" ref="352089959"/>
+								<reference key="IBUISelectedTitleColor" ref="558888403"/>
 								<reference key="IBUINormalTitleColor" ref="869268540"/>
-								<object class="NSColor" key="IBUIDisabledTitleShadowColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC40OTQ1NjUxOSAwLjQ5NDU2NTE5IDAuNDk0NTY1MTkAA</bytes>
-								</object>
+								<reference key="IBUIDisabledTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUINormalTitleShadowColor" ref="1048209685"/>
 								<reference key="IBUIFontDescription" ref="1033276623"/>
 								<reference key="IBUIFont" ref="895014277"/>
@@ -723,26 +717,26 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="0.0"/>
+					<real value="2"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="0.0"/>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="0.0"/>
+					<real value="2"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="0.0"/>
+					<real value="2"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="0.0"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<real value="0.0"/>
+					<real value="2"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="2"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="2"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
