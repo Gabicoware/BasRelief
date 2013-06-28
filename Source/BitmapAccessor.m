@@ -327,7 +327,7 @@
 		
         CGContextRelease(bitmapContext);
         
-		return (CGImageRef)[(id)result autorelease];
+		return result;
 		
 	}
 	

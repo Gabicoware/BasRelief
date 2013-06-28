@@ -12,6 +12,8 @@
 
 #import "OpenGLRenderView.h"
 
+#import <CoreMotion/CoreMotion.h>
+
 #define kAccelerometerFrequency		100.0 // Hz
 #define kFilteringFactor			0.1
 
@@ -77,6 +79,8 @@ typedef enum _RenderingState{
 	BOOL hasInteracted;
     
     RenderingState _renderingState;
+    
+    CMMotionManager* _motionManager;
 }
 
 
@@ -103,19 +107,20 @@ typedef enum _RenderingState{
             switch (renderingState) {
                 case RenderingStateInitial:
                     break;
-                case RenderingStateInteractive:
+                case RenderingStateInteractive:{
                     [renderView setRendering:previewRendering];
                     dispatch_async(renderingQueue, ^{
                         [self renderBasReliefPreview:NULL];
                     });
+                }
                     break;
-                case RenderingStateRenderingFull:
+                case RenderingStateRenderingFull:{
                     [renderView setRendering:previewRendering];
                     
                     dispatch_async(renderingQueue, ^{
                         [self renderBasReliefFull:NULL];
                     });
-                    
+                }
                     break;
                 case RenderingStateRendered:
                     [renderView setRendering:fullRendering];
@@ -179,9 +184,6 @@ typedef enum _RenderingState{
 	
 	CGImageRef imageRef = [delegate copyImageRef];
     
-	if(previewRendering != NULL){
-		[previewRendering dealloc];
-	}
 	
 	previewRendering = [[BasReliefRendering alloc] initWithHeight:PREVIEW_HEIGHT width:PREVIEW_WIDTH];
 	
@@ -192,9 +194,6 @@ typedef enum _RenderingState{
 	
 	[previewRendering renderBase];	
 	
-	if(fullRendering != NULL){
-		[fullRendering dealloc];
-	}
 	
 	fullRendering = [[BasReliefRendering alloc] initWithHeight:FULL_HEIGHT width:FULL_WIDTH];
 	
@@ -220,13 +219,15 @@ typedef enum _RenderingState{
         
     });
     
-	[(id)delegate performSelectorOnMainThread:@selector(viewControllerDidFinishPreparing:) withObject:self waitUntilDone:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [delegate viewControllerDidFinishPreparing:self];
+    });
     
 }
 
 -(void)renderBasReliefFull:(void *)n{
 	
-	SetLightSourceDidUpdate();
+	//SetLightSourceDidUpdate();
 	
     [fullRendering setAsCurrent];
 	[fullRendering render];
@@ -283,26 +284,45 @@ typedef enum _RenderingState{
         }
     }else{
 		returnToMainMenuRequested = YES;
+        //stop accelerometer events
+        if (self.motionManager.isAccelerometerActive) {
+            [self.motionManager stopAccelerometerUpdates];
+        }
 	}
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
+
+
+- (CMMotionManager *)motionManager
+{
+    if (!_motionManager){
+        _motionManager = [[CMMotionManager alloc] init];
+    }
+    return _motionManager;
+}
+
+
+-(void)updateWithAcceleration:(CMAcceleration)acceleration
 {
 	if(!isUsingTouch){
-		accel[0] = acceleration.x * kFilteringFactor + accel[0] * (1.0 - kFilteringFactor);
+		accel[0] = (-1*acceleration.x) * kFilteringFactor + accel[0] * (1.0 - kFilteringFactor);
 		accel[1] = acceleration.y * kFilteringFactor + accel[1] * (1.0 - kFilteringFactor);
-		accel[2] = acceleration.z * kFilteringFactor + accel[2] * (1.0 - kFilteringFactor);	
+		accel[2] = (-1*acceleration.z) * kFilteringFactor + accel[2] * (1.0 - kFilteringFactor);
 		
-		SetLightSource(accel[0], accel[1], accel[2]);
+		SetLightSource(accel[0], accel[1], ABS(accel[2]));
 		
 		if(GetLightSourceDidUpdate()){
 			
             hasInteracted = YES;
-			SetLightSourceDidUpdate();
 			
             [self setRenderingState:RenderingStateInteractive];
             
 			interactionStartTime = [NSDate timeIntervalSinceReferenceDate];
+            
+            dispatch_async(renderingQueue, ^{
+                [self renderBasReliefPreview:NULL];
+            });
+
 		}
 	}
 }
@@ -332,18 +352,6 @@ typedef enum _RenderingState{
 	
 }
 
-- (void)dealloc {
-    
-	[previewRendering dealloc];
-	
-	[fullRendering dealloc];
-	
-    dispatch_release(renderingQueue);
-        
-    dispatch_release(stateLockQueue);
-	
-	[super dealloc];
-}
 
 -(void)update{
 	
@@ -364,10 +372,7 @@ typedef enum _RenderingState{
             
             if(!previewRendering.isRendering){
                 
-                
                 if(GetLightSourceDidUpdate()){
-                    
-                    SetLightSourceDidUpdate();
                     
                     dispatch_async(renderingQueue, ^{
                         [self renderBasReliefPreview:NULL];
@@ -446,7 +451,7 @@ typedef enum _RenderingState{
 	
 	CGContextRelease(ctx);	
 	
-	return (CGImageRef)[(id)imageRef autorelease];
+	return imageRef;
 }
 
 
@@ -455,6 +460,21 @@ typedef enum _RenderingState{
 - (void)startAnimation
 {
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(update) userInfo:nil repeats:YES];
+    
+    if (!self.isUsingTouch) {
+        
+        if (self.motionManager.isAccelerometerAvailable && !self.motionManager.isAccelerometerActive) {
+            [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
+                                                     withHandler:^(CMAccelerometerData *data, NSError *error)
+             {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self updateWithAcceleration:data.acceleration];
+                 });
+             }
+             ];
+        }
+        
+    }
 }
 
 
@@ -462,6 +482,11 @@ typedef enum _RenderingState{
 {
 	[animationTimer invalidate];
 	animationTimer = nil;
+    if (!self.isUsingTouch) {
+        if (self.motionManager.isAccelerometerActive) {
+            [self.motionManager stopAccelerometerUpdates];
+        }
+    }
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
@@ -469,15 +494,9 @@ typedef enum _RenderingState{
 	animationInterval = interval;
 	
 	if(animationTimer) {
-		[self stopAnimation];
-		[self startAnimation];
+        [animationTimer invalidate];
+        animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(update) userInfo:nil repeats:YES];
 	}
 }
-
-
-
-
-
-
 
 @end

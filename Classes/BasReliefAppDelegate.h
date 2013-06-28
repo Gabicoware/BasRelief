@@ -15,11 +15,10 @@
 @interface BasReliefAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow					*window;
     MainMenuViewController		*viewController;
-	UIAccelerationValue			accel[3];
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet MainMenuViewController *viewController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet MainMenuViewController *viewController;
 
 @end
 

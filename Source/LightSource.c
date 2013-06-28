@@ -29,11 +29,12 @@ SetLightSource(float x, float y, float z){
 	ProposedLightSource[1] = y/length;
 	ProposedLightSource[2] = z/length;
 	
-	if(nanf((char *)LightSource))
+	if(LightSource[0] != LightSource[0] || LightSource[1] != LightSource[1] || LightSource[2] != LightSource[2]){
 		LightSourceDifference = 1;
-	else
+	}else{
 		LightSourceDifference= fabs( LightSource[0] - ProposedLightSource[0]) + fabs( LightSource[1] - ProposedLightSource[1]) + fabs( LightSource[2] - ProposedLightSource[2]);
-	
+	}
+    
 	if(LightSourceDifference > LightSourceDifferenceSensitivity){
 		
 		LightSource[0] = ProposedLightSource[0] ;

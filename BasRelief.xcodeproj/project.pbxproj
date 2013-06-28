@@ -16,6 +16,7 @@
 		770921510FF668AD001E8115 /* BasReliefRendering.m in Sources */ = {isa = PBXBuildFile; fileRef = 770921500FF668AD001E8115 /* BasReliefRendering.m */; };
 		771AA96C0F34BE2500E5055D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 771AA96B0F34BE2500E5055D /* Icon.png */; };
 		771AA9720F34C09400E5055D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 771AA9710F34C09400E5055D /* Default.png */; };
+		773E4722177DD7D200C44EDE /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773E4721177DD7D200C44EDE /* CoreMotion.framework */; };
 		774C49F10FE73F06009821E2 /* RenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 774C49F00FE73F06009821E2 /* RenderViewController.m */; };
 		775A630A0F51120F00E4BF1D /* sandstone.png in Resources */ = {isa = PBXBuildFile; fileRef = 775A63090F51120F00E4BF1D /* sandstone.png */; };
 		777855A71041A24700CDFB22 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777855A61041A24700CDFB22 /* RenderView.m */; };
@@ -47,6 +48,7 @@
 		770921500FF668AD001E8115 /* BasReliefRendering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasReliefRendering.m; sourceTree = "<group>"; };
 		771AA96B0F34BE2500E5055D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		771AA9710F34C09400E5055D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		773E4721177DD7D200C44EDE /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		774C49EF0FE73F06009821E2 /* RenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewController.h; sourceTree = "<group>"; };
 		774C49F00FE73F06009821E2 /* RenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewController.m; sourceTree = "<group>"; };
 		775A63090F51120F00E4BF1D /* sandstone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sandstone.png; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				773E4722177DD7D200C44EDE /* CoreMotion.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -146,6 +149,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				773E4721177DD7D200C44EDE /* CoreMotion.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				77D8089E0F2ABF4700ACFE7E /* QuartzCore.framework */,
 				77D808940F2ABEB000ACFE7E /* OpenGLES.framework */,
@@ -287,6 +291,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos3.1.2]" = "iPhone Developer: Daniel Mueller (W6SDP3V5AV)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -305,6 +310,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BasRelief_Prefix.pch;

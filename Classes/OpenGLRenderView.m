@@ -18,7 +18,7 @@
 // A class extension to declare private methods
 @interface OpenGLRenderView ()
 
-@property (nonatomic, retain) EAGLContext *context;
+@property (nonatomic, strong) EAGLContext *context;
 
 -(BOOL) createFramebuffer;
 -(void) destroyFramebuffer;
@@ -70,7 +70,6 @@
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
         
         if (!context || ![EAGLContext setCurrentContext:context]) {
-            [self release];
             return nil;
         }
 		
@@ -94,7 +93,6 @@
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
         
         if (!context || ![EAGLContext setCurrentContext:context]) {
-            [self release];
             return nil;
         }
 		
@@ -162,8 +160,6 @@
         [EAGLContext setCurrentContext:nil];
     }
     
-    [context release];  
-    [super dealloc];
 }
 
 - (void)drawPositionerAtX:(float)x Y:(float)y{

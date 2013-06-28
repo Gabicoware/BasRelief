@@ -180,7 +180,6 @@
 	free(heightMap);
 	free(normals);
 	
-	[super dealloc];
 	
 }
 

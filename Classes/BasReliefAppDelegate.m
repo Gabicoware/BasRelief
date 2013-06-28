@@ -10,9 +10,6 @@
 #import "MainMenuViewController.h"
 #import "LightSource.h"
 
-#define kAccelerometerFrequency		100.0 // Hz
-#define kFilteringFactor			0.1
-
 @implementation BasReliefAppDelegate
 
 @synthesize window;
@@ -30,11 +27,6 @@
 }
 
 
-- (void)dealloc {
-    [viewController release];
-    [window release];
-    [super dealloc];
-}
 
 
 

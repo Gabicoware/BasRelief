@@ -19,8 +19,8 @@
 
 //- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 
-@property (atomic) IBOutlet UIButton *tiltButton;
-@property (atomic) IBOutlet UIButton *touchButton;
+@property (weak, atomic) IBOutlet UIButton *tiltButton;
+@property (weak, atomic) IBOutlet UIButton *touchButton;
 
 @end
 
@@ -194,11 +194,9 @@
 		CGImageRelease(formattedImageRef);
 	if(destinationImageRef != NULL)
 		CGImageRelease(destinationImageRef);
-	[renderer dealloc];
 	renderer = NULL;
 	formattedImageRef = NULL;
 	destinationImageRef = NULL;
-    [super dealloc];
 }
 
 - (IBAction)didTapShareButton{
@@ -212,7 +210,6 @@
         
     }];
     
-    [controller autorelease];
 }
     /*
 	UIImage *img = imageView.image;

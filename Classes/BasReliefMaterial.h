@@ -20,6 +20,6 @@
 
 @property RenderingValues base;
 @property RenderingValues shadow;
-@property (retain) NSString * materialBundlePath;
+@property (strong) NSString * materialBundlePath;
 
 @end

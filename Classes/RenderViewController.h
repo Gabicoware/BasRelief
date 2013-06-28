@@ -13,7 +13,7 @@
 #import "BasReliefRendering.h"
 #import "RenderView.h"
 
-@interface RenderViewController : UIViewController <UIAccelerometerDelegate>
+@interface RenderViewController : UIViewController
 
 @property (atomic) BOOL isUsingTouch;
 
@@ -26,7 +26,7 @@
 
 -(void)prepareRendering;
 
-@property (retain) id <NSObject, RenderViewControllerDelegate> delegate;
-@property (retain) BasReliefMaterial * material;
+@property (strong) id <NSObject, RenderViewControllerDelegate> delegate;
+@property (strong) BasReliefMaterial * material;
 
 @end
