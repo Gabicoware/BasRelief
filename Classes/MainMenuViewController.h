@@ -33,9 +33,6 @@
 	IBOutlet UIView *controlsView;
 
 	IBOutlet UIView *loadingView;
-
-	IBOutlet UISegmentedControl *segmentControl;
-
 	
 	BOOL didChangeImage;
 	//Boolean needsPreviewRendering;
@@ -45,16 +42,6 @@
 	
 }
 
-- (IBAction)getPhoto;
-
-//- (IBAction)bitmapViewRelief;
-//- (IBAction)viewPreview;
-
-- (IBAction)viewRendering;
-
-- (IBAction)saveImage;
-
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 
 
 

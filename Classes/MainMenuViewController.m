@@ -15,6 +15,13 @@
 
 - (void) initializeRenderer;
 
+- (IBAction)viewRendering;
+
+//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+
+@property (atomic) IBOutlet UIButton *tiltButton;
+@property (atomic) IBOutlet UIButton *touchButton;
+
 @end
 
 
@@ -24,7 +31,7 @@
 	return [RenderViewController class];
 }
 
-- (CGImageRef) getImageRef{
+- (CGImageRef) copyImageRef{
 	
 	return CGImageCreateCopy( formattedImageRef );
 	
@@ -34,7 +41,8 @@
 	
     self.wantsFullScreenLayout = YES;
     
-	segmentControl.selectedSegmentIndex = 1;
+    self.touchButton.selected = YES;
+    self.tiltButton.selected = NO;
 	
 }
 
@@ -50,20 +58,34 @@
 	
 }
 
-- (IBAction)getPhoto {
+-(void)didTapTouchButton{
+    self.touchButton.selected = YES;
+    self.tiltButton.selected = NO;
+}
+
+-(void)didTapTiltButton{
+    self.touchButton.selected = NO;
+    self.tiltButton.selected = YES;
+}
+
+
+
+- (IBAction)didTapPhotoButton {
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
-	//if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-		//UIImagePickerController *picker;
-		//picker.sourceType = UIImagePickerControllerSourceTypeCamera;
 		picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-		[self presentModalViewController:picker animated:YES];
-		
+		[self presentViewController:picker animated:YES completion:^{}];
 	}
-	
+}
+
+- (IBAction)didTapCameraButton {
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+		picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+		[self presentViewController:picker animated:YES completion:^{}];
+	}
 }
 
 - ( void ) viewControllerDidFinishPreparing: ( UIViewController * ) viewer{
-	[self presentModalViewController:viewer animated:NO];
+    [self presentViewController:viewer animated:NO completion:^{}];
 	
 }
 
@@ -75,13 +97,13 @@
 	loadingView.hidden = NO;
 	controlsView.hidden = YES;
 	
-	renderer.isUsingTouch = segmentControl.selectedSegmentIndex == 1;
+	renderer.isUsingTouch = self.touchButton.selected;
 	
 	if(needsRendering){
 		[renderer prepareRendering];
 		needsRendering = NO;
 	}else{
-		[self presentModalViewController:renderer animated:NO];
+		[self presentViewController:renderer animated:NO completion:^{}];
 	}
 	//[self presentModalViewController:renderer animated:NO];
 	
@@ -135,8 +157,10 @@
 	if(formattedImageRef != NULL)
 		CGImageRelease(formattedImageRef);
 	
-	formattedImageRef = CGImageCreateForBasRefliefFormat([image CGImage], CGRectMake(0.0, 0.0, FULL_WIDTH, FULL_HEIGHT));
-	    
+	formattedImageRef = CGImageForBasRefliefFormat([image CGImage], CGRectMake(0.0, 0.0, FULL_WIDTH, FULL_HEIGHT));
+    
+    CGImageRetain(formattedImageRef);
+    
 	imageView.image = [UIImage imageWithCGImage:formattedImageRef];
 	
 	viewButton.enabled = YES;
@@ -149,12 +173,12 @@
 
 - ( void ) viewControllerDidFinishViewing: ( UIViewController * ) viewer{
 	//viewFullButton.enabled = YES;
-	[self dismissModalViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:NO completion:NULL];
 }
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:NO completion:NULL];
 }
 
 
@@ -177,7 +201,20 @@
     [super dealloc];
 }
 
-- (void)saveImage{
+- (IBAction)didTapShareButton{
+    
+    NSString *textToShare = @"#basrelief";
+    NSArray *itemsToShare = @[textToShare, imageView.image];
+    
+    UIActivityViewController* controller = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    
+    [self presentViewController:controller animated:YES completion:^{
+        
+    }];
+    
+    [controller autorelease];
+}
+    /*
 	UIImage *img = imageView.image;
 	
 	// Request to save the image to camera roll
@@ -198,5 +235,5 @@
 		// Show message image successfully saved
     }
 }
-
+*/
 @end

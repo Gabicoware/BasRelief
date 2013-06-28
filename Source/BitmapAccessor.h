@@ -36,6 +36,6 @@ CGContextRef CreateBitmapContext ( size_t pixelsWide, size_t pixelsHigh, int col
 
 CGContextRef CreateBitmapContextWithData ( size_t pixelsWide, size_t pixelsHigh , int colorSpaceID, void *bitmapData);
 
-CGImageRef CGImageCreateForBasRefliefFormat(CGImageRef imageRef, CGRect targetRect);
+CGImageRef CGImageForBasRefliefFormat(CGImageRef imageRef, CGRect targetRect);
 
-CGImageRef CGImageFromPath( NSString *path );
+CGImageRef CGImageCreateFromPath( NSString *path );

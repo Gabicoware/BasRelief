@@ -114,9 +114,6 @@ CalculateNormals( const unsigned char heightMap[], float normals[], const int wi
 
 	float i_vectors[24] = { -1,0,0, -1,-1,0, 0,-1,0, 1,-1,0, 1,0,0, 1,1,0, 0,1,0, -1,1,0 };
 
-	Boolean * booleans;
-
-	booleans = (Boolean *)malloc(sizeof(Boolean)*DIRECTIONS);
 	vectors = (float *)malloc(sizeof(float)*DIRECTIONS*3);
 
 
@@ -211,6 +208,8 @@ CalculateNormals( const unsigned char heightMap[], float normals[], const int wi
 		}
 
 	}
+    
+    free(vectors);
 
 }
 
@@ -234,9 +233,7 @@ RenderIndeterminate( const int width, const int height, const unsigned char sour
 	
 	RenderingNeedsUpdating = 0;
 	
-	int index = width*height;
-
-	for(index = width*height; index--; ){
+	for(int index = width*height; index--; ){
 		RenderIndeterminatePixel( &Normals[index*3], &sourceColors[index*4], &targetColors[index*4]);
 	}
 			
@@ -247,11 +244,9 @@ RenderBase( const int width, const int height, unsigned char sourceColors[]){
 
 	RenderingNeedsUpdating = 0;
 
-	int index = width*height;
-
 	unsigned char * sc;
 
-	for(index = width*height; index--; ){
+	for(int index = width*height; index--; ){
 		float colorShift = 0;
 		float dotProduct;
 
@@ -467,7 +462,10 @@ RenderVertical( const int width, const int height, const unsigned char sourceCol
 		}
 		
 	}
-	
+    
+    free(currentHeights);
+    free(previousHeights);
+    
 }
 
 
@@ -587,6 +585,9 @@ RenderHorizontal( const int width, const int height, const unsigned char sourceC
 		}
 		
 	}
+    
+    free(currentHeights);
+    free(previousHeights);
 		
 }
 

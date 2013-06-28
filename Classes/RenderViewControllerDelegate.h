@@ -11,7 +11,7 @@
 
 //@property (readonly) CGImageRef imageRef;
 
-- (CGImageRef) getImageRef;
+- (CGImageRef) copyImageRef;
 
 - (void) setRenderingImageRef: (CGImageRef) renderedImageRef;
 

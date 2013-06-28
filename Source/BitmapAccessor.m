@@ -21,16 +21,19 @@
 		//CGDataProviderRef provider = CGDataProviderCreateWithFilename([imageFileName UTF8String]);
 		//CGImageRef image = CGImageCreateWithPNGDataProvider(provider, NULL, true, kCGRenderingIntentDefault);
 		
-		CGImageRef image  = CGImageFromPath( path );
+		CGImageRef image  = CGImageCreateFromPath( path );
 		
 		RGBArrayFromCGImage( image, rgbArray, width, height);
 		
+        CGImageRelease(image);
 	}
 
-	CGImageRef CGImageFromPath( NSString *path ){
+	CGImageRef CGImageCreateFromPath( NSString *path ){
 		NSString *imageFileName = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:path];
 		CGDataProviderRef provider = CGDataProviderCreateWithFilename([imageFileName UTF8String]);
-		return CGImageCreateWithPNGDataProvider(provider, NULL, true, kCGRenderingIntentDefault);
+		CGImageRef result = CGImageCreateWithPNGDataProvider(provider, NULL, true, kCGRenderingIntentDefault);
+        CGDataProviderRelease(provider);
+        return result;
 	}
 
 
@@ -126,7 +129,6 @@
 	{
 		CGContextRef    context = NULL;
 		CGColorSpaceRef colorSpace;
-		int             bitmapByteCount;
 		int             bitmapBytesPerRow;
 		CGImageAlphaInfo alphaInfo;
 		
@@ -157,9 +159,7 @@
 				alphaInfo = kCGImageAlphaPremultipliedFirst;
 				break;
 		}
-		
-		bitmapByteCount = (bitmapBytesPerRow * pixelsHigh);
-		
+				
 		if (colorSpace == NULL)
 		{
 			fprintf(stderr, "Error allocating color space\n");
@@ -269,28 +269,27 @@
 		return context;
 	}
 	
-	CGImageRef CGImageCreateForBasRefliefFormat(CGImageRef imageRef, CGRect targetRect)
+	CGImageRef CGImageForBasRefliefFormat(CGImageRef imageRef, CGRect targetRect)
 	{
 		size_t sourceWidth = CGImageGetWidth(imageRef);
 		size_t sourceHeight = CGImageGetHeight(imageRef);
 		
-		CGContextRef bitmap;
+		
 		
         CGImageRef rotatedImageRef = NULL;
         
 		if((sourceWidth > sourceHeight && targetRect.size.width < targetRect.size.height)  || (sourceWidth < sourceHeight && targetRect.size.width > targetRect.size.height)){
 			
 			//Rotation
+			CGContextRef rotateContext = CreateBitmapContext(	sourceHeight, sourceWidth, GRAYSCALE	);
 			
-			bitmap = CreateBitmapContext(	sourceHeight, sourceWidth, GRAYSCALE	);
+			CGContextRotateCTM (rotateContext, radians(-90));
 			
-			CGContextRotateCTM (bitmap, radians(-90));
-			
-			CGContextDrawImage(bitmap, CGRectMake(( -1.0 * sourceWidth ) , 0.0, sourceWidth, sourceHeight ), imageRef);
+			CGContextDrawImage(rotateContext, CGRectMake(( -1.0 * sourceWidth ) , 0.0, sourceWidth, sourceHeight ), imageRef);
 						
-			rotatedImageRef = CGBitmapContextCreateImage(bitmap);
+			rotatedImageRef = CGBitmapContextCreateImage(rotateContext);
 			
-			CGContextRelease(bitmap);
+			CGContextRelease(rotateContext);
 			
 			sourceWidth = CGImageGetWidth(rotatedImageRef);
 			sourceHeight = CGImageGetHeight(rotatedImageRef);
@@ -317,16 +316,18 @@
         }
 		
 		// Build a bitmap context that's the size of the thumbRect
-		bitmap = CreateBitmapContext(	targetRect.size.width,	targetRect.size.height, GRAYSCALE);
+		CGContextRef bitmapContext = CreateBitmapContext(	targetRect.size.width,	targetRect.size.height, GRAYSCALE);
 		
 		// Draw into the context, this scales the image
-		CGContextDrawImage(bitmap, targetRect, croppedImageRef);
+		CGContextDrawImage(bitmapContext, targetRect, croppedImageRef);
 		
 		CGImageRelease(croppedImageRef);
 		
-		CGImageRef result = CGBitmapContextCreateImage(bitmap);
+		CGImageRef result = CGBitmapContextCreateImage(bitmapContext);
 		
-		return result;
+        CGContextRelease(bitmapContext);
+        
+		return (CGImageRef)[(id)result autorelease];
 		
 	}
 	

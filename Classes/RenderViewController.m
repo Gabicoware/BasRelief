@@ -33,7 +33,7 @@ typedef enum _RenderingState{
 
 @interface RenderViewController()
 
-+(CGImageRef)createImageRefFromRendering:(BasReliefRendering *)rendering;
++(CGImageRef)imageRefFromRendering:(BasReliefRendering *)rendering;
 
 
 -(void)update;
@@ -63,7 +63,6 @@ typedef enum _RenderingState{
 	//This needs to be set from a sub class
 	IBOutlet RenderView *renderView;
 	
-	BOOL isPreviewing;
     
 	double	accel[3];
 	
@@ -77,6 +76,8 @@ typedef enum _RenderingState{
     NSTimeInterval animationInterval;
 	
 	BOOL returnToMainMenuRequested;
+    
+	BOOL hasInteracted;
     
     RenderingState _renderingState;
 }
@@ -166,6 +167,8 @@ typedef enum _RenderingState{
     self.wantsFullScreenLayout = YES;
     self.view.contentMode = UIViewContentModeTop;
     
+    hasInteracted = NO;
+    
     [self setRenderingState:RenderingStateInitial];
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -176,9 +179,8 @@ typedef enum _RenderingState{
 
 -(void)renderBasReliefBase:(void *)n{
 	
-	CGImageRef imageRef = [delegate getImageRef];
-
-
+	CGImageRef imageRef = [delegate copyImageRef];
+    
 	if(previewRendering != NULL){
 		[previewRendering dealloc];
 	}
@@ -205,6 +207,8 @@ typedef enum _RenderingState{
 	[fullRendering renderBase];
     
 	[self performSelectorOnMainThread:@selector(baseRenderingIsComplete:) withObject:nil waitUntilDone:NO];
+    
+    CGImageRelease(imageRef);
 	
 }
 
@@ -246,7 +250,10 @@ typedef enum _RenderingState{
 	
     [previewRendering setAsCurrent];
 	[previewRendering render];
-		
+    
+    if (!hasInteracted) {
+        [self setRenderingState:RenderingStateRenderingFull];
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -290,6 +297,7 @@ typedef enum _RenderingState{
 		
 		if(GetLightSourceDidUpdate()){
 			
+            hasInteracted = YES;
 			SetLightSourceDidUpdate();
 			
             [self setRenderingState:RenderingStateInteractive];
@@ -301,7 +309,9 @@ typedef enum _RenderingState{
 
 
 - (void)updateLightSourceWithTouch:(UITouch *)touch {
-		
+    
+    hasInteracted = YES;
+    
 	CGPoint currentPosition = [touch locationInView:self.view];
 			
 	CGFloat xScalar, yScalar, zScalar, radius, length;
@@ -394,11 +404,9 @@ typedef enum _RenderingState{
                     
                     CGImageRef imageRef;
                     
-                    imageRef = [RenderViewController createImageRefFromRendering:fullRendering];
+                    imageRef = [RenderViewController imageRefFromRendering:fullRendering];
                     
                     [delegate setRenderingImageRef: imageRef ];
-                    
-                    CGImageRelease(imageRef);
                     
                     [self stopAnimation];
                     
@@ -427,7 +435,7 @@ typedef enum _RenderingState{
 	
 }
 
-+(CGImageRef)createImageRefFromRendering:(BasReliefRendering *)rendering{
++(CGImageRef)imageRefFromRendering:(BasReliefRendering *)rendering{
 	
 	CGContextRef ctx;
 	CGImageRef imageRef;
@@ -438,7 +446,7 @@ typedef enum _RenderingState{
 	
 	CGContextRelease(ctx);	
 	
-	return imageRef;
+	return (CGImageRef)[(id)imageRef autorelease];
 }
 
 

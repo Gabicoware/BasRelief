@@ -77,7 +77,7 @@
 		indices = (GLushort *)malloc(sizeof(GLushort)*w*2);
 		vertices = (GLfixed *)malloc(sizeof(GLfixed)*h*w*2);
 		
-		heightMap = (unsigned char *)malloc(sizeof(char)*h*w);
+		heightMap = (unsigned char *)malloc(sizeof(unsigned char)*h*w);
 		normals = (float *)malloc(sizeof(float)*h*w*3);
 		width = w;
 		height = h;
