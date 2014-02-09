@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define FULL_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
-#define FULL_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define FULL_HEIGHT ([[UIScreen mainScreen] bounds].size.height * [[UIScreen mainScreen] scale])
+#define FULL_WIDTH ([[UIScreen mainScreen] bounds].size.width * [[UIScreen mainScreen] scale])
 #define FULL_SHIFT 1
 
 #define PREVIEW_HEIGHT FULL_HEIGHT/4.0

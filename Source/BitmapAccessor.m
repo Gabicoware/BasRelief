@@ -299,12 +299,12 @@
 		CGRect crop = CGRectMake(0.0, 0.0, sourceWidth, sourceHeight);
 		
 		if(sourceWidth / sourceHeight > targetRect.size.width / targetRect.size.height ){
-			crop.size.width = ( sourceHeight / targetRect.size.height ) * targetRect.size.width ;
-			crop.origin.x = ( sourceWidth - crop.size.width )/2;
-			
-		}else{
 			crop.size.height = ( sourceWidth / targetRect.size.width ) * targetRect.size.height ;
 			crop.origin.y = ( sourceHeight - crop.size.height )/2;
+			
+		}else{
+			crop.size.width = ( sourceHeight / targetRect.size.height ) * targetRect.size.width ;
+			crop.origin.x = ( sourceWidth - crop.size.width )/2;
 		}
 		
 		//NSLog(@"%i, %f, %i, %f, %f, %f",sourceWidth,crop.size.width,sourceHeight,crop.size.height, crop.origin.x, crop.origin.y );
