@@ -605,8 +605,7 @@ RenderHorizontal( const int width, const int height, const unsigned char sourceC
 void 
 RenderIndeterminatePixel( const float *normals, const unsigned char *sourceColors, unsigned char *targetColors){
 	
-	float colorShift = 0;
-	float dotProduct;
+	float colorShift, dotProduct, t0, t1, t2;
 	
 	dotProduct = normals[0]*LightVector[0] + normals[1]*LightVector[1] + normals[2]*LightVector[2];
 	
@@ -615,26 +614,29 @@ RenderIndeterminatePixel( const float *normals, const unsigned char *sourceColor
 	if(dotProduct < ShadeThreshold){
 		colorShift = A1 + A2* dotProduct;
 		
-		targetColors[0] = sourceColors[0]*colorShift;
-		targetColors[1] = sourceColors[1]*colorShift;
-		targetColors[2] = sourceColors[2]*colorShift;
+		t0 = sourceColors[0]*colorShift;
+		t1 = sourceColors[1]*colorShift;
+		t2 = sourceColors[2]*colorShift;
 
 	}else if(dotProduct > SpecularThreshold){
 		
         colorShift = B1 + B2* dotProduct;
 		
-		targetColors[0] = sourceColors[0]*(1- colorShift) + colorShift*255;
-		targetColors[1] = sourceColors[1]*(1- colorShift) + colorShift*255;
-		targetColors[2] = sourceColors[2]*(1- colorShift) + colorShift*255;
+		t0 = sourceColors[0]*(1- colorShift) + colorShift*255;
+		t1 = sourceColors[1]*(1- colorShift) + colorShift*255;
+		t2 = sourceColors[2]*(1- colorShift) + colorShift*255;
 
     }else{
 
-		targetColors[0] = sourceColors[0];
-		targetColors[1] = sourceColors[1];
-		targetColors[2] = sourceColors[2];
+		t0 = sourceColors[0];
+		t1 = sourceColors[1];
+		t2 = sourceColors[2];
 
 	}
 	
+    targetColors[0] = t0;
+    targetColors[1] = t1;
+    targetColors[2] = t2;
 }
 
 float
