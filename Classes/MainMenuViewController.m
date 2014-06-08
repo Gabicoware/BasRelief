@@ -11,7 +11,7 @@
 
 #import "BitmapAccessor.h"
 
-@interface MainMenuViewController()
+@interface MainMenuViewController()<UINavigationControllerDelegate,UIImagePickerControllerDelegate, RenderViewControllerDelegate,UIActionSheetDelegate>
 
 - (void) initializeRenderer;
 
@@ -19,14 +19,39 @@
 
 //- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 
-@property (weak, atomic) IBOutlet UIButton *tiltButton;
-@property (weak, atomic) IBOutlet UIButton *touchButton;
-@property (weak, atomic) IBOutlet UIImageView *highlightImageView;
-
 @end
 
 
-@implementation MainMenuViewController
+@implementation MainMenuViewController{
+    
+    BasReliefMaterial * material;
+	
+	RenderViewController *renderer;
+	
+	UIImagePickerController *picker;
+    
+	
+	CGImageRef destinationImageRef;
+	
+	CGImageRef imageRef;
+	
+	IBOutlet UIImageView *imageView;
+	
+	IBOutlet UIBarButtonItem *photoButton;
+	IBOutlet UIBarButtonItem *reliefButton;
+	IBOutlet UIBarButtonItem *shareButton;
+    
+	IBOutlet UIToolbar *toolbar;
+    
+	IBOutlet UIView *loadingView;
+	
+	BOOL didChangeImage;
+	
+    BOOL needsRendering;
+	
+	CGImageRef formattedImageRef;
+	
+}
 
 +(Class)rendererClass{
 	return [RenderViewController class];
@@ -39,17 +64,15 @@
 }
 
 - (void)viewDidLoad{
-	
+	[super viewDidLoad];
     self.wantsFullScreenLayout = YES;
     
-    self.touchButton.selected = YES;
-    self.tiltButton.selected = NO;
-	
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 	loadingView.hidden = YES;
-	controlsView.hidden = NO;
+	toolbar.hidden = NO;
 	
 	picker = [[UIImagePickerController alloc] init];
 	picker.delegate = self;
@@ -59,30 +82,70 @@
 	
 }
 
--(IBAction)didTapTouchButton{
-    self.touchButton.selected = YES;
-    self.tiltButton.selected = NO;
-}
-
--(IBAction)didTapTiltButton{
-    self.touchButton.selected = NO;
-    self.tiltButton.selected = YES;
-}
-
-
+#define PhotoActionSheetTag 1001
+#define CameraTitle @"Take Photo"
+#define LibraryTitle @"Choose Existing Photo"
+#define CancelTitle @"Cancel"
 
 - (IBAction)didTapPhotoButton {
+    NSString* buttonTitle1 = nil;
+    NSString* buttonTitle2 = nil;
+    //@"Take Photo"
+    //@"Choose Existing Photo"
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
-		picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-		[self presentViewController:picker animated:YES completion:^{}];
-	}
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+            buttonTitle1 = CameraTitle;
+            buttonTitle2 = LibraryTitle;
+        }else{
+            buttonTitle1 = LibraryTitle;
+        }
+    }else if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        buttonTitle1 = CameraTitle;
+    }
+    
+    UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:CancelTitle destructiveButtonTitle:nil otherButtonTitles:buttonTitle1,buttonTitle2, nil];
+    sheet.tag = PhotoActionSheetTag;
+    [sheet showFromBarButtonItem:photoButton animated:YES];
 }
 
-- (IBAction)didTapCameraButton {
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-		picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-		[self presentViewController:picker animated:YES completion:^{}];
-	}
+-(void)photoActionSheetDidDismissWithButtonTitle:(NSString*)buttonTitle{
+    if ([buttonTitle isEqualToString:CameraTitle]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:picker animated:YES completion:^{}];
+    }else if ([buttonTitle isEqualToString:LibraryTitle]) {
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:picker animated:YES completion:^{}];
+    }
+}
+
+#define TiltTitle @"Tilt"
+#define TouchTitle @"Touch"
+#define ReliefActionSheetTag 1002
+
+-(IBAction)didTapReliefButton:(id)sender{
+    UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:CancelTitle destructiveButtonTitle:nil otherButtonTitles:TiltTitle,TouchTitle, nil];
+    sheet.tag = ReliefActionSheetTag;
+    [sheet showFromBarButtonItem:photoButton animated:YES];
+}
+
+-(void)reliefActionSheetDidDismissWithButtonTitle:(NSString*)buttonTitle{
+    if ([buttonTitle isEqualToString:TiltTitle]) {
+        [self viewRendering:NO];
+    }else if ([buttonTitle isEqualToString:TouchTitle]) {
+        [self viewRendering:YES];
+    }
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    
+    NSString* buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if (actionSheet.tag == PhotoActionSheetTag) {
+        [self photoActionSheetDidDismissWithButtonTitle:buttonTitle];
+    }else if (actionSheet.tag == ReliefActionSheetTag) {
+        [self reliefActionSheetDidDismissWithButtonTitle:buttonTitle];
+    }
+    
 }
 
 - ( void ) viewControllerDidFinishPreparing: ( UIViewController * ) viewer{
@@ -91,14 +154,13 @@
 }
 
 
-- (IBAction)viewRendering {
+- (void)viewRendering:(BOOL)isUsingTouch {
 	
 	[self initializeRenderer];
 	
 	loadingView.hidden = NO;
-	controlsView.hidden = YES;
-	
-	renderer.isUsingTouch = self.touchButton.selected;
+	toolbar.hidden = YES;
+	renderer.isUsingTouch = isUsingTouch;
 	
 	if(needsRendering){
 		[renderer prepareRendering];
@@ -106,7 +168,6 @@
 	}else{
 		[self presentViewController:renderer animated:NO completion:^{}];
 	}
-	//[self presentModalViewController:renderer animated:NO];
 	
 }
 
@@ -140,14 +201,14 @@
 	
 	imageView.image = [UIImage imageWithCGImage:destinationImageRef];
 	
-	saveImageButton.enabled = YES;
+	shareButton.enabled = YES;
 }
 
 
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
 	
-	saveImageButton.enabled = NO;
+	shareButton.enabled = NO;
 	
 	//viewPreviewButton.enabled = NO;
 	//viewFullButton.enabled = NO;
@@ -164,33 +225,14 @@
     
 	imageView.image = [UIImage imageWithCGImage:formattedImageRef];
 	
-	viewButton.enabled = YES;
-	//viewFullButton.enabled = YES;
-	//viewFullButton.enabled = NO;
-	
-    CGRect highlightFrame = self.highlightImageView.frame;
-    
-    CGRect viewButtonFrame = viewButton.frame;
-    
-    highlightFrame.origin.x = viewButtonFrame.origin.x + viewButtonFrame.size.width/2.0 - highlightFrame.size.width/2.0;
-    
-    self.highlightImageView.frame = highlightFrame;
-    
+	reliefButton.enabled = YES;
+	   
 }
 
 
 - ( void ) viewControllerDidFinishViewing: ( UIViewController * ) viewer{
 	//viewFullButton.enabled = YES;
     [self dismissViewControllerAnimated:NO completion:NULL];
-    
-    CGRect highlightFrame = self.highlightImageView.frame;
-    
-    CGRect shareButtonFrame = saveImageButton.frame;
-    
-    highlightFrame.origin.x = shareButtonFrame.origin.x + shareButtonFrame.size.width/2.0 - highlightFrame.size.width/2.0;
-    
-    self.highlightImageView.frame = highlightFrame;
-
 }
 
 
@@ -228,26 +270,5 @@
     }];
     
 }
-    /*
-	UIImage *img = imageView.image;
-	
-	// Request to save the image to camera roll
-	UIImageWriteToSavedPhotosAlbum(img, self, 
-								   @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    // Was there an error?
-    if (error != NULL)
-    {
-		// Show error message...
-		
-    }
-    else  // No errors
-    {
-		// Show message image successfully saved
-    }
-}
-*/
 @end

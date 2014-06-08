@@ -23,6 +23,11 @@ float ShadeAlpha;
 float SpecularThreshold;
 float SpecularAlpha;
 
+float A1;
+float A2;
+float B1;
+float B2;
+
 int RenderingNeedsUpdating = 0;
 
 void
@@ -90,6 +95,12 @@ SetRenderingValues(RenderingValues values){
 	SpecularThreshold = values.specularThreshold;
 	SpecularAlpha = values.specularAlpha;
 	
+    A1 = 1.0 - ShadeAlpha/255.0;
+    A2 = ShadeAlpha/(ShadeThreshold*255.0);
+
+    B1 = -1*(SpecularAlpha*SpecularThreshold)/((1 - SpecularThreshold)*255.0);
+    B2 = (SpecularAlpha/(1 - SpecularThreshold))/255.0;;
+    
 }
 
 
@@ -602,8 +613,7 @@ RenderIndeterminatePixel( const float *normals, const unsigned char *sourceColor
 	if(dotProduct < 0.0) dotProduct = 0.0;
 	
 	if(dotProduct < ShadeThreshold){
-		
-		colorShift = 1.0- (ShadeAlpha*(ShadeThreshold - dotProduct)/ShadeThreshold)/255;
+		colorShift = A1 + A2* dotProduct;
 		
 		targetColors[0] = sourceColors[0]*colorShift;
 		targetColors[1] = sourceColors[1]*colorShift;
@@ -611,13 +621,13 @@ RenderIndeterminatePixel( const float *normals, const unsigned char *sourceColor
 
 	}else if(dotProduct > SpecularThreshold){
 		
-		colorShift = (SpecularAlpha*(dotProduct - SpecularThreshold)/(1 - SpecularThreshold))/255;
+        colorShift = B1 + B2* dotProduct;
 		
 		targetColors[0] = sourceColors[0]*(1- colorShift) + colorShift*255;
 		targetColors[1] = sourceColors[1]*(1- colorShift) + colorShift*255;
 		targetColors[2] = sourceColors[2]*(1- colorShift) + colorShift*255;
 
-	}else{
+    }else{
 
 		targetColors[0] = sourceColors[0];
 		targetColors[1] = sourceColors[1];

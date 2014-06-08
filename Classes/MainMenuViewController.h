@@ -10,37 +10,7 @@
 #import "RenderViewController.h"
 #import "BasReliefMaterial.h"
 
-@interface MainMenuViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate, RenderViewControllerDelegate>{
-
-    BasReliefMaterial * material;
-	
-	RenderViewController *renderer;
-	
-	UIImagePickerController *picker;
-
-	
-	CGImageRef destinationImageRef;
-	
-	CGImageRef imageRef;
-	
-	IBOutlet UIImageView *imageView;
-	
-	IBOutlet UIButton *viewButton;
-	//IBOutlet UIButton *viewFullButton;
-	
-	IBOutlet UIButton *saveImageButton;
-
-	IBOutlet UIView *controlsView;
-
-	IBOutlet UIView *loadingView;
-	
-	BOOL didChangeImage;
-	//Boolean needsPreviewRendering;
-	BOOL needsRendering;
-	
-	CGImageRef formattedImageRef;
-	
-}
+@interface MainMenuViewController : UIViewController
 
 
 
